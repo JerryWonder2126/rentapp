@@ -96,7 +96,7 @@ DATABASES = {
     }
 }
 
-if os.getenv('DEVELOPMENT_MODE') != 'True' or os.getenv('DEVELOPMENT_MODE') is None:
+if os.getenv('DEVELOPMENT_MODE') is None:
     if len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
         if os.getenv("DATABASE_URL", None) is None:
             raise Exception("DATABASE_URL environment variable not defined")
@@ -165,7 +165,7 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 
-if os.getenv('DEVELOPMENT_MODE') != 'True' or os.getenv('DEVELOPMENT_MODE') is None:
+if os.getenv('DEVELOPMENT_MODE') is None:
     # FOR AZURE
     DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'
     STATICFILES_STORAGE = 'backend.custom_azure.AzureStaticStorage'
