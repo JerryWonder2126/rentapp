@@ -1,0 +1,95 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    {% if all_products %}
+    <div class="container-fluid">
+        <div class="row g-1 my-3 product-images">
+            <div class="col-12">
+                <h5>Services</h5>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                <p>Service 1</p>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                <p>Service 2</p>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                <p>Service 3</p>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                <p>Service 4</p>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                <p>Service 5</p>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                <p>Service 6</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h5>All {{ group }}</h5>
+            </div>
+        </div>
+        <div class="row g-1 my-3 product-images">
+            <div class="col-12">
+                <h5>Location 2</h5>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+        </div>
+        <div class="row g-1 my-3 product-images">
+            <div class="col-12">
+                <h5>Location 1</h5> 
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

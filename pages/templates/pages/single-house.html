@@ -1,0 +1,42 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-2 product-images">
+            <div class="col-12">
+                <h5>Single Home</h5>
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            </div>
+            <div class="col-3 product-image">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                details
+            </div>
+            <div>
+                <button class="btn btn-md btn-dark">Show Interest</button>
+            </div>
+        
+        </div>
+    </div>
+</main>
+{% endblock %}

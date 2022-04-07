@@ -1,0 +1,77 @@
+body {
+    background-color: rgba(243, 241, 241, 0.952);
+}
+h1, h5 {
+    color: red;
+}
+
+/* APPLIES WHEN MENU IS EXPANDED (ON MOBILES) */
+.menu-expanded {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90vw;
+    min-height: 100vh;
+    display: block;
+    z-index: 100;
+}
+
+.menu-expanded .navbar-collapse li {
+    margin: .5em 1em;
+    padding: 1em 0em;
+    border-bottom: .5px solid black;
+}
+
+/* FOR PRODUCT IMAGES */
+.product-image {
+    position: relative;
+}
+.product-images > .product-image img {
+}
+
+.product-images > .product-image p {
+    background-color: rgba(7, 1, 1, 0.815);
+    color: rgba(214, 18, 18, 0.863);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-bottom: 0rem;
+    padding: 0.5rem;
+    text-transform: capitalize;
+}
+
+/* FOR OFFERS IMAGES */
+.offers .offer-box {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 0.5rem 0rem;
+}
+
+.offers .offer-box > div:last-of-type {
+    margin: 0rem 1rem;
+    position: relative;
+}
+
+.offers .offer-box > div:last-of-type button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+@media screen and (max-device-width: 768px) {
+    h1, h5 {
+        color: green;
+    }
+}
+
+#about, #contact {
+    min-height: 100vh;
+}
+
+#about {
+    background-color: green;
+}
+#contact {
+    background-color: red;
+}

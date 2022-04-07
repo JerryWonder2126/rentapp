@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>RentYourHouse</title>
+    <!-- <link rel="stylesheet" href="{% static 'pages/css/cssreset-meyers.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'pages/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/css/index.css' %}">
+</head>
+<body>
+
+    <header>
+       {% include 'pages/navigation.html' %}
+    </header>
+
+    {% block content %} {% endblock %}
+
+    {% include 'pages/footer.html' %}
+
+    <script src="{% static 'pages/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'pages/js/jquery.film_roll.min.js' %}"></script>
+    <script src="{% static 'pages/js/jquery.touchSwipe.min.js' %}"></script>
+    <script src="{% static 'pages/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'pages/js/index.js' %}"></script>
+
+</body>
+</html>

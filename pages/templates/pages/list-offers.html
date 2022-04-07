@@ -1,0 +1,73 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-1 my-3 offers">
+            <div class="col-12">
+                <h5>
+                    {% if byRegion %} {{ group }}(s) in {{ filter }} {% endif %}
+                    {% if byType %} {{ filter }}(s) {% endif %}
+                </h5>
+            </div>
+            <div class="offer-box">
+                <div>
+                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                </div>
+                <div>
+                    <p>Short Description</p>
+                    <p>at $2,000,000</p>
+                    <p>Nearest Bus-Stop</p>
+                    <button class="btn btn-md btn-primary">View Details</button>
+                </div>
+            </div>
+            <div class="offer-box">
+                <div>
+                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                </div>
+                <div>
+                    <p>Short Description</p>
+                    <p>at $2,000,000</p>
+                    <p>Nearest Bus-Stop</p>
+                    <button class="btn btn-md btn-primary">View Details</button>
+                </div>
+            </div>
+            <div class="offer-box">
+                <div>
+                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                </div>
+                <div>
+                    <p>Short Description</p>
+                    <p>at $2,000,000</p>
+                    <p>Nearest Bus-Stop</p>
+                    <button class="btn btn-md btn-primary">View Details</button>
+                </div>
+            </div>
+            <div class="offer-box">
+                <div>
+                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                </div>
+                <div>
+                    <p>Short Description</p>
+                    <p>at $2,000,000</p>
+                    <p>Nearest Bus-Stop</p>
+                    <button class="btn btn-md btn-primary">View Details</button>
+                </div>
+            </div>
+            <div class="offer-box">
+                <div>
+                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                </div>
+                <div>
+                    <p>Short Description</p>
+                    <p>at $2,000,000</p>
+                    <p>Nearest Bus-Stop</p>
+                    <button class="btn btn-md btn-primary">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
