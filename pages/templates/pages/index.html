@@ -6,123 +6,134 @@
 <main>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6">
+            <!-- <div class="col-6">
                 <h1>Page Us</h1>
             </div>
             <div class="col-6">
                 <h1>Page Us</h1>
+            </div> -->
+            <div id="homeCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item product-image active">
+                        <div>
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                            <div>
+                                <p class="text-success">Are you a land or home owner? Rent or sell your home and land with us.</p>
+                                <p class="text-white">Are you looking to rent or buy a home? Browse through our catalog of homes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item product-image">
+                        <div>
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                            <div>
+                                <p class="text-white">house rent</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item product-image coming-soon">
+                        <div>
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                            <div>
+                                <p class="text-white">property purchase</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item product-image coming-soon">
+                        <div>
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                            <div>
+                                <p class="text-white">estate development</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item product-image coming-soon">
+                        <div>
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                            <div>
+                                <p class="text-white">interior decoration</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="carousel-item product-image">
+                        <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                    </div>
+                    <div class="carousel-item product-image">
+                        <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                    </div>
+                    <div class="carousel-item product-image">
+                        <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                    </div> -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" id="next-btn" data-bs-target="#homeCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
-
-        <div class="row g-1 my-3 product-images">
-            <div class="col-12">
-                <h5>Services</h5>
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                <p>house rent</p>
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                <p>property purchase</p>
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                <p>estate development</p>
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                <p>interior decoration</p>
-            </div>
-        </div>
-
 
         <div class="row g-1 product-images home-box">
             <div class="col-12">
                 <h5>Search by region</h5>
             </div>
-            <div data-group="home" data-filterby="region" data-filter="abuja" class="col-3 product-image">
+            <div data-group="home" data-filterby="region" data-filter="abuja" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>abuja</p>
             </div>
-            <div data-group="home" data-filterby="region" data-filter="lagos" class="col-3 product-image">
+            <div data-group="home" data-filterby="region" data-filter="lagos" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>lagos</p>
             </div>
-            <div data-group="home" data-filterby="region" data-filter="illorin" class="col-3 product-image">
+            <div data-group="home" data-filterby="region" data-filter="illorin" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>illorin</p>
             </div>
-            <div data-group="home" data-filterby="region" data-filter="ondo" class="col-3 product-image">
+            <div data-group="home" data-filterby="region" data-filter="ondo" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>ondo</p>
             </div>
-            <div data-group="home" data-filterby="region" data-filter="akure" class="col-3 product-image">
+            <div data-group="home" data-filterby="region" data-filter="akure" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>akure</p>
             </div>
         </div>
-
-        <!-- <div class="row">
-            <div class="col-12">
-                <h5>Search by region</h5>
-            </div>
-            <div id="film-roll">
-                <div class="product-image">
-                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                    <p>Region 2</p>
-                </div>
-                <div class="product-image">
-                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                    <p>Region 3</p>
-                </div>
-                <div class="product-image">
-                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                    <p>Region 4</p>
-                </div>
-                <div class="product-image">
-                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                    <p>Region 5</p>
-                </div>
-                <div class="product-image">
-                    <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
-                    <p>Region 6</p>
-                </div>
-            </div>
-        </div> -->
         <div class="row g-1 product-images home-box">
             <div class="col-12">
                 <h5>Search by type</h5>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="a room" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="a room" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>a room</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="face me and face you" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="face me and face you" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>face me and face you</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="one bedroom self con" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="one bedroom self con" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>one bedroom self con</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="two bedroom self con" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="two bedroom self con" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>two bedroom self con</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="three bedroom self con" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="three bedroom self con" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>three bedroom self con</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="duplex" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="duplex" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>Duplex</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="upstairs" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="upstairs" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>Upstairs</p>
             </div>
-            <div data-group="home" data-filterby="type" data-filter="bungalow" class="col-3 product-image">
+            <div data-group="home" data-filterby="type" data-filter="bungalow" class="col-6 col-sm-3 product-image">
                 <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
                 <p>Bungalow</p>
             </div>
@@ -135,14 +146,144 @@
             <div class="col-12">
                 <h5>About Us</h5>
             </div>
+            <div class="col-12 col-sm-12 col-md-6">
+                <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+            </div>
+            <div class="col-12 col-sm-6">
+                <h5>What we do</h5>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Dolore mollitia exercitationem, eos voluptate expedita doloribus sed minus 
+                    illo nihil dolorum placeat, ullam hic! Asperiores illo adipisci ipsum, 
+                    distinctio nesciunt ullam.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h5>Why choose us</h5>
+            </div>
+        </div>
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-6 col-lg-4">
+                <h6>Legibility</h6>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Dolore mollitia exercitationem, eos voluptate expedita doloribus sed minus 
+                    illo nihil dolorum placeat, ullam hic! Asperiores illo adipisci ipsum, 
+                    distinctio nesciunt ullam.
+                </p>
+            </div>
+            <div class="col-6 col-lg-4">
+                <h6>Legibility</h6>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Dolore mollitia exercitationem, eos voluptate expedita doloribus sed minus 
+                    illo nihil dolorum placeat, ullam hic! Asperiores illo adipisci ipsum, 
+                    distinctio nesciunt ullam.
+                </p>
+            </div>
+            <div class="col-6 col-lg-4">
+                <h6>Legibility</h6>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Dolore mollitia exercitationem, eos voluptate expedita doloribus sed minus 
+                    illo nihil dolorum placeat, ullam hic! Asperiores illo adipisci ipsum, 
+                    distinctio nesciunt ullam.
+                </p>
+            </div>
+            <div class="col-6 col-lg-4">
+                <h6>Legibility</h6>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Dolore mollitia exercitationem, eos voluptate expedita doloribus sed minus 
+                    illo nihil dolorum placeat, ullam hic! Asperiores illo adipisci ipsum, 
+                    distinctio nesciunt ullam.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-sm-6 d-flex align-items-center justify-content-center">
+                <div class="member-img">
+                    <img src="{% static 'pages/media/twitter.png' %}" alt="Fred Allen rentyourhouse">
+                </div>
+                <div class="member-details">
+                    <p>
+                        <span class="name">Joyce Meyers</span>
+                        <span class="role">Community Leader,</span>
+                        <span class="number">
+                            <span><img src="{% static 'pages/media/whatsapp.png' %}" alt="whatsapp connect name rentyourhouse" class="social-icon"></span>
+                            +2347057570146
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="col col-sm-6 d-flex align-items-center justify-content-center">
+                <div class="member-img">
+                    <img src="{% static 'pages/media/twitter.png' %}" alt="Fred Allen rentyourhouse">
+                </div>
+                <div class="member-details">
+                    <p>
+                        <span class="name">Fred Allen</span>
+                        <span class="role">Community Leader,</span>
+                        <span class="number">
+                            <span><img src="{% static 'pages/media/whatsapp.png' %}" alt="whatsapp connect name rentyourhouse" class="social-icon"></span>
+                            +2347057570146
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="col col-sm-6 d-flex align-items-center justify-content-center">
+                <div class="member-img">
+                    <img src="{% static 'pages/media/twitter.png' %}" alt="Fred Allen rentyourhouse">
+                </div>
+                <div class="member-details">
+                    <p>
+                        <span class="name">Ahmed Khan</span>
+                        <span class="role">Lead Content Writer,</span>
+                        <span class="number">
+                            <span><img src="{% static 'pages/media/whatsapp.png' %}" alt="whatsapp connect name rentyourhouse" class="social-icon"></span>
+                            +2347057570146
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="col col-sm-6 d-flex align-items-center justify-content-center">
+                <div class="member-img">
+                    <img src="{% static 'pages/media/twitter.png' %}" alt="Fred Allen rentyourhouse">
+                </div>
+                <div class="member-details">
+                    <p>
+                        <span class="name">Bruce Lee</span>
+                        <span class="role">Lead Social Director,</span>
+                        <span class="number">
+                            <span><img src="{% static 'pages/media/whatsapp.png' %}" alt="whatsapp connect name rentyourhouse" class="social-icon"></span>
+                            +2347057570146
+                        </span>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 <section id="contact">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h5>About Us</h5>
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8">
+                <h5>Contact Us</h5>
+                <form>
+                    <div class="mb-2">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <label for="message">What will you like to tell us?</label>
+                        <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <input type="submit" value="Send" class="form-control">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

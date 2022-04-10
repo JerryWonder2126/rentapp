@@ -7,36 +7,77 @@
     <div class="container-fluid">
         <div class="row g-2 product-images">
             <div class="col-12">
-                <h5>Single Home</h5>
+                <div class="products-header">
+                    <div></div>
+                    <div>
+                        <h5>Short Description</h5>
+                    </div>
+                    <div></div>
+                </div>
             </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}">
+            <div class="col-12">
+                <div id="offerCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active product-image">
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="carousel-item product-image">
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                        </div>
+                        <!-- <div class="carousel-item product-image">
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="carousel-item product-image">
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="carousel-item product-image">
+                            <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid">
+                        </div> -->
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#offerCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" id="next-btn" data-bs-target="#offerCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}">
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}">
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}">
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}">
-            </div>
-            <div class="col-3 product-image">
-                <img src="{% static 'pages/media/wedoimg.jpg' %}">
-            </div>
+            
         </div>
         <div class="row">
             <div class="col">
-                details
+                <hr>
+                <div class="">Bungalow</div>
+                <hr>
+                <div class="mb-2"></div>
+                <div class="d-flex justify-content-center align-items-center">
+                    $75,000,000
+                </div>
+                <hr>
+                <div class="mb-2"></div>
+                <div class="">
+                    <p>Address</p>
+                    <p>Nearest Bus-Stop</p>
+                </div>
+                <hr>
+                <div class="mb-2"></div>
+
+
+                <div class="negotiation-btn">
+                    <button class="btn btn-md btn-dark">start negotiation</button>
+                </div>
             </div>
-            <div>
-                <button class="btn btn-md btn-dark">Show Interest</button>
-            </div>
-        
         </div>
     </div>
 </main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $(() => {
+        $('footer').hide();
+    });
+</script>
 {% endblock %}

@@ -3,6 +3,9 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content="rent or buy your home without much hassle"/>
+    <meta name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no'>
     <title>RentYourHouse</title>
     <!-- <link rel="stylesheet" href="{% static 'pages/css/cssreset-meyers.css' %}"> -->
     <link rel="stylesheet" href="{% static 'pages/css/bootstrap.min.css' %}">
@@ -14,15 +17,18 @@
        {% include 'pages/navigation.html' %}
     </header>
 
-    {% block content %} {% endblock %}
+    <div class="main-content">
+        {% block content %} {% endblock %}
+    </div>
 
     {% include 'pages/footer.html' %}
 
     <script src="{% static 'pages/js/jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'pages/js/jquery.film_roll.min.js' %}"></script>
-    <script src="{% static 'pages/js/jquery.touchSwipe.min.js' %}"></script>
+    <!-- <script src="{% static 'pages/js/jquery.film_roll.min.js' %}"></script> -->
+    <!-- <script src="{% static 'pages/js/jquery.touchSwipe.min.js' %}"></script> -->
     <script src="{% static 'pages/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'pages/js/index.js' %}"></script>
+    {% block extra_scripts %} {% endblock %}
 
 </body>
 </html>

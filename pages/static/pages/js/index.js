@@ -8,10 +8,10 @@ $(() => {
             $('.navbar .navbar-toggler').trigger('click');
         } 
     });
-    let film_roll = new FilmRoll({
-        container: '#film-roll',
-    });
-    setTimeout(() => film_roll.resize(), 100);
+    // let film_roll = new FilmRoll({
+    //     container: '#film-roll',
+    // });
+    // setTimeout(() => film_roll.resize(), 100);
 
     $('div.home-box > div.product-image').on('click', (ev) => {
         let box = $(ev.target);
