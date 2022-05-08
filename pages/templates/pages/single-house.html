@@ -8,7 +8,9 @@
         <div class="row g-2 product-images">
             <div class="col-12">
                 <div class="products-header">
-                    <div></div>
+                    <div>
+                        <button onclick="backOneStep()">back</button>
+                    </div>
                     <div>
                         <h5>Short Description</h5>
                     </div>
@@ -75,9 +77,5 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-    $(() => {
-        $('footer').hide();
-    });
-</script>
+<script src="{% static 'pages/js/single-house.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-1 my-3 product-images">
+            <h1>Review Home</h1>
+            <div class="">
+                <form>
+                    <form class="">
+                        <div class="image-section">
+                            <div class="mb-2">
+                                <label for="">kdl</label>
+                                {% if imagesMessage %}
+                                <p>{{ imagesMessage }}</p>
+                                <input type="file" class="form-control" name="image" id="">
+                                {% else %}
+                                good
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="details-section">
+                            <div class="mb-2">
+                                <label for="short_description">Short Description</label>
+                                {% if descriptionMessage %}
+                                <p>{{ descriptionMessage }}</p>
+                                <input type="text" name="short_description" id="short_description" maxlength="50" class="form-control">
+                                {% else %}
+                                good
+                                {% endif %}
+                            </div>
+                            <div class="mb-2">
+                                <label for="location">Location</label>
+                                {% if locationMessage %}
+                                <p>{{ locationMessage }}</p>
+                                <input type="text" name="location" class="form-control" id="location">
+                                {% else %}
+                                good
+                                {% endif %}
+                            </div>
+                            <div class="mb-2">
+                                <label for="price">Price</label>
+                                {% if priceMessage %}
+                                <p>{{ priceMessage }}</p>
+                                <input type="number" name="price" class="form-control" id="price">
+                                {% else %}
+                                good
+                                {% endif %}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <label for="type" class="input-group-text">Apartment Type</label>
+                                </div>
+                                {% if apartmentMessage %}
+                                <p>{{ apartmentMessage }}</p>
+                                <select name="type" id="type" class="custom-select">
+                                    <option value="" selected>Choose...</option>
+                                    <option value="a room">a room</option>
+                                    <option value="face me and face you">face me and face you</option>
+                                    <option value="one bedroom self con">one bedroom self con</option>
+                                    <option value="two bedroom self con">two bedroom self con</option>
+                                    <option value="three bedroom self con">three bedroom self con</option>
+                                    <option value="duplex">duplex</option>
+                                    <option value="upstairs">upstairs</option>
+                                    <option value="bungalow">bungalow</option>
+                                </select>
+                                {% else %}
+                                good
+                                {% endif %}
+                            </div>
+                            <div class="mb-2">
+                                <label for="selling_points">Other selling points</label>
+                                {% if sellingPointsMessage %}
+                                <p>{{ sellingPointsMessage }}</p>
+                                <textarea name="selling_points" id="selling_points" rows="10" style="width: 100%;"></textarea>
+                                {% else %}
+                                good
+                                {% endif %}
+                            </div> 
+                            <div class="mb-3">
+                                <input type="button" value="back" class="btn btn-md btn-danger" onclick="backOneStep()">
+                                <input type="submit" value="update">
+                            </div>  
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

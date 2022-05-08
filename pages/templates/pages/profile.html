@@ -1,0 +1,20 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-1 my-3">
+            <h1>Welcome, {{ request.user }}</h1>
+            <p>{{ request.user.is_verified }}</p>
+            <p>Thanks for checking in with us today.</p>
+            <form method="post" class="form">
+                {{ form }}
+                {% csrf_token %}
+                <input type="submit" value="update">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

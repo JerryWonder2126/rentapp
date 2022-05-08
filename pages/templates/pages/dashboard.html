@@ -1,0 +1,148 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid page-content">
+    <div class="row">
+        <div class="col-6">
+            <h5>on sale</h5>
+            <h3>10</h3>
+        </div>
+        <div class="col-6">
+            <h5>sold</h5>
+            <h3>8</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12">
+            <div class="card">
+                <div class="card-body">
+                    <p>Want to rent/sell your apartment?</p>
+                    <button id="uploadHome" class="btn btn-primary">Start Process</button>
+                </div>
+            </div>
+        </div>
+        <div class="col col-12">
+            <div class="card">
+                <div class="card-body">
+                    <p>Your home catalog</p>
+                    <a href="{% url 'user_homes_list' %}" class="btn btn-primary">View your homes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Some things you need to know before putting up your apartment for rent</h3>
+            <ul>
+                <li>Lorem ipsum dolor sit amet consectet eligendi commodi exercitationem similique ab quas mollitia saepe?</li>
+                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, ducimus dolore tenetur laudantium aliquam, magni impedit quos ipsa nihil omnis eius repellat eligendi commodi exercitationem similique ab quas mollitia saepe?</li>
+                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, ducimus dolore tenetur laudantium aliquam, magni impedit quos ipsa nihil omnis eius repellat eligendi commodi exercitationem similique ab quas mollitia saepe?</li>
+                <li>Sapiente, ducimus dolore tenetur laudantium aliquam, magni impedit quos ipsa nihil omnis eius repellat eligendi commodi</li>
+                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, ducimnis eius repellat eligendi commodi exercitationem similique ab quas mollitia saepe?</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid upload-form">
+    <form enctype="multipart/form-data" data-show="{% if show_form %}true{% else %}false{% endif %}" method="post" action="{% url 'add_home' %}">
+        {% if home_form.errors or image_error %}
+        <h5 class="text-danger">There are errors in your application form. Kindly address them, then submit again.</h5>
+        {% endif %}
+        {% csrf_token %}
+        <div class="image-section">
+            <div class="mb-2">
+                <h5>Upload home images</h5>
+                <ul>
+                    <li>Image of Bathroom</li>
+                    <li>Image of kitchen</li>
+                    <li>Image of Living room</li>
+                    <li>Image of Surroundings</li>
+                    <li>Other relevant images</li>
+                </ul>
+                {% if image_error %}
+                <div class="text-danger">
+                    <p>{{ image_error }}</p>
+                </div>
+                {% endif %}
+                <button class="btn btn-primary add-image-btn">Add Image</button>
+            </div>
+        </div>
+        <div class="details-section">
+            <div class="mb-2">
+                <label for="short_description">Short Description</label>
+                {% if home_form.short_description.errors %}
+                    {% for error in home_form.short_description.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <input type="text" {% if home_form.data.short_description %} value="{{ home_form.data.short_description }}" {% endif %} name="short_description" id="short_description" maxlength="50" class="form-control form-field {% if home_form.short_description.errors %} error-field {% endif %}" required>
+            </div>
+            <div class="mb-2">
+                <label for="address">Address</label>
+                {% if home_form.address.errors %}
+                    {% for error in home_form.address.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <input type="text" name="address" {% if home_form.data.address %} value="{{ home_form.data.address }}" {% endif %}  class="form-control form-field {% if home_form.address.errors %} error-field {% endif %}" id="address" required>
+            </div>
+            <div class="mb-2">
+                <label for="price">Price</label>
+                {% if home_form.price.errors %}
+                    {% for error in home_form.price.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <input type="number" name="price" {% if home_form.data.price %} value="{{ home_form.data.price }}" {% endif %}  class="form-control form-field {% if home_form.price.errors %} error-field {% endif %}" id="price" required>
+            </div>
+    
+            {{home_form.data}}
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <label for="apartment_type" class="input-group-text">Apartment Type</label>
+                </div>
+                <select name="apartment_type" id="apartment_type" {% if home_form.data.apartment_type %} value="{{ home_form.data.apartment_type }}" {% endif %}  class="custom-select form-field {% if home_form.apartment_type.errors %} error-field {% endif %}" required>
+                    <option value="" selected>Choose...</option>
+                    <option value="a room">a room</option>
+                    <option value="face me and face you">face me and face you</option>
+                    <option value="one bedroom self con">one bedroom self con</option>
+                    <option value="two bedroom self con">two bedroom self con</option>
+                    <option value="three bedroom self con">three bedroom self con</option>
+                    <option value="duplex">duplex</option>
+                    <option value="upstairs">upstairs</option>
+                    <option value="bungalow">bungalow</option>
+                </select>
+                {% if home_form.apartment_type.errors %}
+                    {% for error in home_form.apartment_type.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="mb-2">
+                <label for="selling_point">Other selling points</label>
+                {% if home_form.selling_points.errors %}
+                    {% for error in home_form.selling_points.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <textarea name="selling_point" id="selling_point" {% if home_form.data.selling_point %} value="{{ home_form.data.selling_point }}" {% endif %}  class="form-control form-field {% if home_form.selling_point.errors %} error-field {% endif %}" rows="10" required></textarea>
+            </div> 
+        </div>
+    </form>
+    <div class="bg-light p-2 action-buttons">
+        <button id="cancelButton" class="btn btn-danger">cancel</button>
+        <button data-action="next" id="nextButton" class="btn btn-primary">next</button>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'pages/js/dashboard.js' %}"></script>
+{% endblock %}

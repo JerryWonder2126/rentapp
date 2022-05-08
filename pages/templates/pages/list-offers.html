@@ -7,10 +7,18 @@
     <div class="container-fluid">
         <div class="row g-1 my-3 offers">
             <div class="col-12">
-                <h5>
-                    {% if byRegion %} {{ group }}(s) in {{ filter }} {% endif %}
-                    {% if byType %} {{ filter }}(s) {% endif %}
-                </h5>
+                <div class="products-header">
+                    <div>
+                        <button onclick="backOneStep()">back</button>
+                    </div>
+                    <div>
+                        <h5>
+                            {% if byRegion %} {{ group }}(s) in {{ filter }} {% endif %}
+                            {% if byType %} {{ filter }}(s) {% endif %}
+                        </h5>
+                    </div>
+                    <div></div>
+                </div>
             </div>
             <div class="offer-box">
                 <div>

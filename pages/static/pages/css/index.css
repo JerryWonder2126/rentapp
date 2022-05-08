@@ -8,13 +8,14 @@ img {
     width: 100%;
 }
 .main-content {
-    min-height: 90vh;
+    min-height: calc(90vh - 72px);
 }
 footer {
     min-height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-color: #ff8d05; */
 }
 #about {
     min-height: 100vh;
@@ -48,26 +49,37 @@ footer {
     border-bottom: .5px solid black;
 }
 
+.menu-expanded .reg-links {
+    margin: 5rem auto 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-expanded .dropdown-menu {
+    border: none;
+}
+
+.menu-expanded .dropdown-menu {
+    border: none;
+} 
+.navbar-light .navbar-nav .show>.nav-link {
+    color: rgba(0, 0, 0, 0.75);
+    border-bottom: 1px solid;
+}
+
+.navbar-light .navbar-nav .show>.nav-link:last-of-type{
+    border: none;
+}
+
 /* FOR INDEX PAGE */
 #homeCarousel {
     background-color: rgba(0, 0, 0, 0.973);
 }
 #homeCarousel .carousel-item div {
-    display: flex;
-    justify-content: center;
-}
-#homeCarousel .carousel-item div {
-    position: relative;
-    height: 90vh;
-}
-#homeCarousel .carousel-item div > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-#homeCarousel .carousel-item div > img {
-    height: 90vh;
-    width: auto !important;
+    height: 60vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 /* FOR PRODUCT IMAGES */
@@ -174,21 +186,80 @@ footer {
     width: 1em;
 }
 
+/* FOR UPLOAD HOME FORM */
+.upload-form select {
+    width: calc(100% - 140px);
+}
+.upload-form {
+    display: absolute;
+    height: calc(100vh - 375px);
+    width: 100vw;
+    top: 0;
+    left: 0;
+}
 
-@media screen and (max-device-width: 768px) {
+.upload-form .action-buttons {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-field.error-field {
+    border-color: #dc3545;
+}
+
+.upload-form .action-buttons button {
+    margin: 0.5rem 0.25rem;
+}
+
+/* FOR LIST HOME FOR REVIEW PAGES */
+.home-box .card-body {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    border-radius: 20px;
+}
+
+.home-box .card-body div:first-of-type {
+    position: relative
+}
+
+.home-box .card-body div:first-of-type .agency-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.review-btn {
+    margin: 1.5em 0;
+}
+.thumbnail {
+    width: 30px;
+    height: 30px;
+}
+
+/* FOR USER HOME LIST PAGE */
+.user-home-box .card-body {
+    border-radius: 10px;
+}
+.home-tags {
+    background-color: #ff8d05;
+    word-break: keep-all;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin: 3px;
+    width: max-content;
+    display: inline-flex;
+}
+
+@media screen and (min-device-width: 768px) {
     h1, h5 {
         color: green;
     }
-    /* FOR INDEX PAGE */
-    #homeCarousel {
-        padding: unset;
-        background-color: rgba(0, 0, 0, 0.973);
-    }
+
     #homeCarousel .carousel-item div {
-        height: unset;
+        height: calc(100vh - 56px);
     }
-    #homeCarousel .carousel-item div > img {
-        height: auto;
-        width: 100% !important;
-    }
+
 }

@@ -9,11 +9,37 @@
                 <li class="nav-item">
                     <a href="{% url 'index' %}" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                    {% if not request.user.is_staff %}
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'user_homes_list' %}" class="nav-link">Your Homes</a>
+                    </li>
+                    {% endif %}
+                {% endif %}  
+                {% if request.user.is_staff %}
+                <li class="nav-item dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle">All Homes</a>
+                    <div class="dropdown-menu bg-light">
+                        <a href="{% url 'fresh_review_list' %}" class="nav-link">Not Reviewed</a>
+                        <a href="{% url 'started_review_list' %}" class="nav-link">On Review (remote)</a>
+                        <a href="{% url 'updated_review_list' %}" class="nav-link">Updated for Review</a>
+                        <a href="{% url 'onsite_review_list' %}" class="nav-link">On Review (on-site)</a>
+                        <a href="{% url 'passed_review_list' %}" class="nav-link">Passed Review</a>
+                        <a href="{% url 'on_sale_list' %}" class="nav-link">On Sale (rent)</a>
+                        <a href="{% url 'transaction_ongoing_list' %}" class="nav-link">Transaction Ongoing</a>
+                        <a href="{% url 'sold_list' %}" class="nav-link">Sold (rented)</a>
+                      <!-- <a *ngFor="let service of services | async" class="nav-link" (click)="menuBtn.click()" routerLinkActive="active-nav" [routerLink]="['/', 'section']" [queryParams]="{'section': service.uhash, 'title': service.title}" [routerLinkActiveOptions]="{exact: true}">{{ service.title }}</a> -->
+                    </div>
+                  </li>
+                {% endif %}            
+                <!-- <li class="nav-item">
                     <a href="{% url 'products_all' %}" class="nav-link">Services</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">FAQs</a>
+                    <a href="{% url 'faqs' %}" class="nav-link">FAQs</a>
                 </li>
                 <li class="nav-item">
                     <a href="/#about" class="nav-link">About Us</a>
@@ -21,6 +47,13 @@
                 <li class="nav-item">
                     <a href="/#contact" class="nav-link">Contact Us</a>
                 </li>
+                <div class="reg-links">
+                    {% if not request.user.is_authenticated %}
+                    <p><a href="{% url 'account_signup' %}">Sign Up</a> | <a href="{% url 'account_login' %}">Sign in</a></p>
+                    {% else %}
+                    <p><a href="{% url 'account_logout' %}">Sign out</a></p>
+                    {% endif %}
+                </div>
             </ul>
         </div>
     </div>

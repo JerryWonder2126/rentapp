@@ -1,0 +1,56 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-1 my-3">
+            <div class="">
+                <button onclick="backOneStep()" class="btn btn-md btn-dark">back</button>
+            </div>
+            {% if on_site_ready %}
+            <h1>Remote Review Passed Successfully</h1>
+            <div class="">
+                <p>Congratulations, your home have passed the first stage of the review process</p>
+                <p>Now, we have to make some confirmations physically</p>
+                <p><a href="#">Click here to place a call with us now</a> or <a href="#">Connect with us on whatsapp</a></p>
+                <p class="text-secondary">if you're done with this stage already, kindly exercise a little patience with us, your dashboard will be updated very soon.</p>
+            </div>
+            {% endif %}
+            {% if on_sale_ready %}
+            <h1>Your home is ready to be put on sale</h1>
+            <div class="">
+                <p>Congratulations, your home has successfully passed all of our review process.</p>
+                <p>Please confirm the folowing details to proceed</p>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="title">house type</th>
+                            <td class="value">Bungalow</td>
+                        </tr>
+                        <tr>
+                            <th class="title">Address</th>
+                            <td class="value">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident voluptatibus 
+                                vel voluptatum.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="title">Actual price</th>
+                            <td class="value">$12,000</td>
+                        </tr>
+                        <tr>
+                            <th class="title">Selling price</th>
+                            <td class="value">$25,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Does anything seem wrong? <a href="#">File a complaint</a></p>
+                <div class="d-flex justify-content-right">
+                    <button class="btn btn-md btn-primary">confirm</button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+{% endblock %}

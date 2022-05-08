@@ -1,0 +1,41 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-1 my-3 product-images">
+            <h1>Review Home</h1>
+            <div class="">
+                <!-- vslebtwd
+                @Vsl2022@@! -->
+                <form>
+                    <div class="mb-3">
+                        <label for="imagesMessage">Images Error Message: </label>
+                        <div class="">
+                            <button data-imageurls="{{ imageurls }}" class="btn btn-md btn-primary">view images</button>
+                        </div>
+                        <textarea name="imagesMessage" id="imagesMessage" cols="30" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addressMessage">Address Error Message</label>
+                        <p>{{ address }}</p>
+                        <textarea name="addressMessage" id="addressMessage" cols="30" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="priceMessage">Price Error Message</label>
+                        <p>{{ price }}</p>
+                        <textarea name="priceMessage" id="priceMessage" cols="30" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" value="update">
+                        <input type="button" value="mark as done">
+                        <input type="button" value="back" onclick="backOneStep()">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

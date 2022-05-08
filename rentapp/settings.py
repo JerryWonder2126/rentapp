@@ -26,10 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r1zl17yzcs$sgi2#(mjhjfaoz087x)dgugsjsj2a4d33x-1i&i'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG') is not None
+DEVELOPMENT_MODE = os.getenv('DEVELOPMENT_MODE')
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',') if os.getenv('DJANGO_ALLOWED_HOSTS') is not None else []
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
 
     # Local
     'accounts',
+    'products',
     'pages',
 ]
 
@@ -96,7 +98,7 @@ DATABASES = {
     }
 }
 
-if os.getenv('DEVELOPMENT_MODE') is None:
+if DEVELOPMENT_MODE is None:
     if len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
         if os.getenv("DATABASE_URL", None) is None:
             raise Exception("DATABASE_URL environment variable not defined")
@@ -156,16 +158,23 @@ AUTHENTICATION_BACKENDS = {
     "allauth.account.auth_backends.AuthenticationBackend",
 }
 
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.CustomUserCreationForm'
+}
+
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_ADAPTER = 'accounts.adapter.UserAccountAdapter'
 
-if os.getenv('DEVELOPMENT_MODE') is None:
+if DEVELOPMENT_MODE is None:
     # FOR AZURE
     DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'
     STATICFILES_STORAGE = 'backend.custom_azure.AzureStaticStorage'
@@ -173,7 +182,7 @@ if os.getenv('DEVELOPMENT_MODE') is None:
     STATIC_LOCATION = "static"
     MEDIA_LOCATION = "media"
 
-    AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME') # Must be replaced by your <storage_account_name>
+    AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME')
     AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
     STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
     MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
