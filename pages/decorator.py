@@ -10,12 +10,13 @@ def is_group(group_names):
             """
             allowed = True
             groups = request.user.groups.all()
-            for group in groups:
-                if group.name not in group_names:
-                    allowed = False
-                    break 
-            if not allowed or not groups.count():
-                return redirect('index')
+            if not request.user.is_superuser:
+                for group in groups:
+                    if group.name not in group_names:
+                        allowed = False
+                        break 
+                if not allowed or not groups.count():
+                    return redirect('index')
             return view_func(request, *args, **kwargs)
         return wrapper
     return check_staff_status

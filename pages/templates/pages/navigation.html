@@ -23,14 +23,14 @@
                 <li class="nav-item dropdown">
                     <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle">All Homes</a>
                     <div class="dropdown-menu bg-light">
-                        <a href="{% url 'fresh_review_list' %}" class="nav-link">Not Reviewed</a>
-                        <a href="{% url 'started_review_list' %}" class="nav-link">On Review (remote)</a>
-                        <a href="{% url 'updated_review_list' %}" class="nav-link">Updated for Review</a>
-                        <a href="{% url 'onsite_review_list' %}" class="nav-link">On Review (on-site)</a>
-                        <a href="{% url 'passed_review_list' %}" class="nav-link">Passed Review</a>
-                        <a href="{% url 'on_sale_list' %}" class="nav-link">On Sale (rent)</a>
-                        <a href="{% url 'transaction_ongoing_list' %}" class="nav-link">Transaction Ongoing</a>
-                        <a href="{% url 'sold_list' %}" class="nav-link">Sold (rented)</a>
+                        <a href="{% url 'review_list' 'not_reviewed' %}" class="nav-link">Not Reviewed</a>
+                        <a href="{% url 'review_list' 'remote_review' %}" class="nav-link">On Review (remote)</a>
+                        <a href="{% url 'review_list' 'updated_for_review' %}" class="nav-link">Updated for Review</a>
+                        <a href="{% url 'review_list' 'onsite_review' %}" class="nav-link">On Review (on-site)</a>
+                        <a href="{% url 'review_list' 'passed_review' %}" class="nav-link">Passed Review</a>
+                        <a href="{% url 'review_list' 'on_sale' %}" class="nav-link">On Sale (rent)</a>
+                        <a href="{% url 'review_list' 'ongoing' %}" class="nav-link">Transaction Ongoing</a>
+                        <a href="{% url 'review_list' 'sold' %}" class="nav-link">Sold (rented)</a>
                       <!-- <a *ngFor="let service of services | async" class="nav-link" (click)="menuBtn.click()" routerLinkActive="active-nav" [routerLink]="['/', 'section']" [queryParams]="{'section': service.uhash, 'title': service.title}" [routerLinkActiveOptions]="{exact: true}">{{ service.title }}</a> -->
                     </div>
                   </li>

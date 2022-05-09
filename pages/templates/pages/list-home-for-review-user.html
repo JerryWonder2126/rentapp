@@ -10,18 +10,31 @@
                 <h1>Your Homes</h1>
                 <a href="{% url 'dashboard' %}?upload_home=True" class="btn btn-primary">Add a home</a>
             </div>
+            {% if home_list %}
+            {% for home in home_list %}
+            <div class="card user-home-box">
+                <div class="card-body">
+                    <div>
+                        <h5>{{home.short_description}}</h5>
+                        <a href="{% url 'single_product' 'group' '56' %}?preview=true" class="btn">preview</a>
+                    </div>
+                    <div data-tags="{{ home.tags }}" class="home-tags"></div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
             <div class="card user-home-box">
                 <div class="card-body">
                     <div>
                         <h5>Short Description</h5>
                         <a href="{% url 'single_product' 'group' '56' %}?preview=true" class="btn">preview</a>
                     </div>
-                    <div class="action-btns">
-                        <span class="home-tags not-reviewed">not reviewed</span>
-                        <span class="home-tags reviewed">reviewed</span>
-                        <span class="home-tags on-sale">on sale</span>
-                        <span class="home-tags ongoing">ongoing</span>
-                        <span class="home-tags on-review">on-review</span>
+                    <div class="home-tags">
+                        <span class="home-tag not-reviewed">not reviewed</span>
+                        <span class="home-tag reviewed">reviewed</span>
+                        <span class="home-tag on-sale">on sale</span>
+                        <span class="home-tag ongoing">ongoing</span>
+                        <span class="home-tag on-review">on-review</span>
                     </div>
                 </div>
             </div>
@@ -31,12 +44,12 @@
                         <h5>Short Description</h5>
                         <p><a href="{% url 'review_home_user' '56' %}">Click here to settle issues on your home</a></p>
                     </div>
-                    <div class="action-btns">
-                        <span class="home-tags not-reviewed">not reviewed</span>
-                        <span class="home-tags reviewed">reviewed</span>
-                        <span class="home-tags on-sale">on sale</span>
-                        <span class="home-tags ongoing">ongoing</span>
-                        <span class="home-tags on-review">on-review</span>
+                    <div class="home-tags">
+                        <span class="home-tag not-reviewed">not reviewed</span>
+                        <span class="home-tag reviewed">reviewed</span>
+                        <span class="home-tag on-sale">on sale</span>
+                        <span class="home-tag ongoing">ongoing</span>
+                        <span class="home-tag on-review">on-review</span>
                     </div>
                 </div>
             </div>
@@ -46,12 +59,12 @@
                         <h5>Short Description</h5>
                         <p><a href="{% url 'confirm_home_on_site' %}">Click here to start on-site review process</a></p>
                     </div>
-                    <div class="action-btns">
-                        <span class="home-tags not-reviewed">not reviewed</span>
-                        <span class="home-tags reviewed">reviewed</span>
-                        <span class="home-tags on-sale">on sale</span>
-                        <span class="home-tags ongoing">ongoing</span>
-                        <span class="home-tags on-review">on-review</span>
+                    <div class="home-tags">
+                        <span class="home-tag not-reviewed">not reviewed</span>
+                        <span class="home-tag reviewed">reviewed</span>
+                        <span class="home-tag on-sale">on sale</span>
+                        <span class="home-tag ongoing">ongoing</span>
+                        <span class="home-tag on-review">on-review</span>
                     </div>
                 </div>
             </div>
@@ -61,12 +74,12 @@
                         <h5>Short Description</h5>
                         <p><a href="{% url 'confirm_home_on_sale' %}">Click here to put home on sale</a></p>
                     </div>
-                    <div class="action-btns">
-                        <span class="home-tags not-reviewed">not reviewed</span>
-                        <span class="home-tags reviewed">reviewed</span>
-                        <span class="home-tags on-sale">on sale</span>
-                        <span class="home-tags ongoing">ongoing</span>
-                        <span class="home-tags on-review">on-review</span>
+                    <div class="home-tags">
+                        <span class="home-tag not-reviewed">not reviewed</span>
+                        <span class="home-tag reviewed">reviewed</span>
+                        <span class="home-tag on-sale">on sale</span>
+                        <span class="home-tag ongoing">ongoing</span>
+                        <span class="home-tag on-review">on-review</span>
                     </div>
                 </div>
             </div>

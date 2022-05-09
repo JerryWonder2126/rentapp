@@ -15,9 +15,10 @@ function reportValidity(field) {
 }
 
 $(() => {
-
+    const MAX_NUMBER_OF_IMAGES = 6;
+    const MIN_NUMBER_OF_IMAGES = 4;
+    let image_count = 0;
     $(() => {
-        const addHomeForm = $('form');
         const url_parameters = location.search ? location.search.toLowerCase() : '';
         if (url_parameters.indexOf('upload_home=true') !== -1) {
             $('#uploadHome').click();
@@ -40,17 +41,31 @@ $(() => {
     });
 
     $("#cancelButton").on("click", (ev) => {
-        // ev.preventDefault();
         $(".upload-form, .page-content, footer").toggle();
         // To reset form
         resetHomeUploadForm();
     });
 
+    $(() => {   // Sets the default value for apartment_type select field if data-selected-value attribute is set
+        let selectField = $(".custom-select.form-field");
+        let preSelectedValue = selectField.attr("data-selected-value");
+        if (preSelectedValue) {
+            let selectOptions = selectField.children();
+            $.each(selectOptions, function (index, value) { 
+                let option = $(value); 
+                if (option.attr('value') === preSelectedValue) {
+                    option.attr('selected', true);
+                    return false;
+                }
+            });
+        }
+    });
+
     $("#nextButton").on("click", (ev) => {
-        // ev.preventDefault();
         const action = $(ev.target).attr("data-action");
         if (action === "next") {
-            first_section_valid = (image_count - 5) >= 0;
+            let first_section_valid = image_count >= MIN_NUMBER_OF_IMAGES;
+            // let first_section_valid = true;
             if (first_section_valid) {
                 $(".image-section, .details-section").toggle();
                 $(ev.target).attr("data-action", "submit");
@@ -59,7 +74,7 @@ $(() => {
                 alert("Home images must be at least 4");
             }
         }else if (action === "submit") {
-            second_section_valid = true
+            let second_section_valid = true
             const inputFields = $(".details-section").find(".form-field");
             $.each(inputFields, (index, field) => {
                 second_section_valid = reportValidity(field);
@@ -72,18 +87,16 @@ $(() => {
         } 
     });
 
-    let image_count = 1;
-
     $(".add-image-btn").on("click", (ev) => {
         ev.preventDefault();
-        if (image_count <= 6) {
+        if (image_count <= MAX_NUMBER_OF_IMAGES) {
             let image_div = $(".image-section");
             let image_field_name = `image_${image_count}`;
             image_div.append(`<input type="file" class="form-control form-field" style="display:none;" name="${image_field_name}" accept="image/jpeg">`);
             let form_field = image_div.children().last();
             form_field.click();
-            // console.log($(".image-section .form-field"));
             form_field.on("change", (ev) => {
+                console.log(ev.target.files);
                 const image_name = ev.target.files[0].name;
                 image_div.append(`<span class="text-primary m-2">${image_name}</span>`);
                 image_count++;

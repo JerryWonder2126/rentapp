@@ -49,7 +49,7 @@
 
 
 <div class="container-fluid upload-form">
-    <form enctype="multipart/form-data" data-show="{% if show_form %}true{% else %}false{% endif %}" method="post" action="{% url 'add_home' %}">
+    <form enctype="multipart/form-data" data-show="{% if show_form %}true{% else %}false{% endif %}" method="post">
         {% if home_form.errors or image_error %}
         <h5 class="text-danger">There are errors in your application form. Kindly address them, then submit again.</h5>
         {% endif %}
@@ -100,13 +100,11 @@
                 {% endif %}
                 <input type="number" name="price" {% if home_form.data.price %} value="{{ home_form.data.price }}" {% endif %}  class="form-control form-field {% if home_form.price.errors %} error-field {% endif %}" id="price" required>
             </div>
-    
-            {{home_form.data}}
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <label for="apartment_type" class="input-group-text">Apartment Type</label>
                 </div>
-                <select name="apartment_type" id="apartment_type" {% if home_form.data.apartment_type %} value="{{ home_form.data.apartment_type }}" {% endif %}  class="custom-select form-field {% if home_form.apartment_type.errors %} error-field {% endif %}" required>
+                <select data-selected-value="{{ home_form.data.apartment_type }}" name="apartment_type" id="apartment_type" class="custom-select form-field {% if home_form.apartment_type.errors %} error-field {% endif %}" required>
                     <option value="" selected>Choose...</option>
                     <option value="a room">a room</option>
                     <option value="face me and face you">face me and face you</option>
@@ -130,7 +128,7 @@
                         <p class="text-danger">{{ error }}</p>
                     {% endfor %}
                 {% endif %}
-                <textarea name="selling_point" id="selling_point" {% if home_form.data.selling_point %} value="{{ home_form.data.selling_point }}" {% endif %}  class="form-control form-field {% if home_form.selling_point.errors %} error-field {% endif %}" rows="10" required></textarea>
+                <textarea name="selling_point" id="selling_point" class="form-control form-field {% if home_form.selling_point.errors %} error-field {% endif %}" rows="10" required>{{home_form.data.selling_point}}</textarea>
             </div> 
         </div>
     </form>

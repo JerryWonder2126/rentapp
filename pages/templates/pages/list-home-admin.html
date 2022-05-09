@@ -1,0 +1,144 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row g-1 my-3">
+            <h1>List of homes</h1>
+            
+            {% if onsite_review or not_reviewed or updated_for_review %}
+            <div class="card home-box">
+                <div class="card-body">
+                    <div>
+                        <h5>Short Description</h5>
+                        <h6 class="agency-name">
+                            <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                            <span class="">Name of Agency</span>
+                        </h6>
+                    </div>
+                    <div class="action-btns d-flex align-items-center justify-content-center flex-column">
+                        
+                        {% if onsite_review %}
+                        <button class="btn btn-md pass-btn">Pass</button>
+                        <button class="btn btn-md breakdown-btn">Breakdown</button>
+                        {% else %}
+                        <a href="{% url 'review_home' '3' %}" class="btn btn-md review-btn">Review</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if passed_review or on_sale %}
+            <div class="card home-box">
+                <div class="card-body">
+                    <div>
+                        <h5>Short Description</h5>
+                        <h6 class="agency-name">
+                            <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                            <span class="">Name of Agency</span>
+                        </h6>
+                    </div>
+                    <div class="action-btns d-flex align-items-center justify-content-center flex-column">
+                        <button class="btn btn-md pass-btn">
+                            {% if passed_review %}Send Reminder{% else %}activate{% endif %}
+                        </button>
+                        <button class="btn btn-md breakdown-btn">Breakdown</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if ongoing %}
+            <div class="card home-box">
+                <div class="card-body">
+                    <div>
+                        <h5>Short Description</h5>
+                        <h6 class="agency-name">
+                            <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                            <span class="">Name of Agency</span>
+                        </h6>
+                    </div>
+                    <div class="action-btns d-flex align-items-center justify-content-center flex-column">
+                        <button class="btn btn-md pass-btn">revert</button>
+                        <button class="btn btn-md breakdown-btn">complete</button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if sold %}
+            <div class="card home-box">
+                <div class="card-body">
+                    <div>
+                        <h5>Short Description</h5>
+                        <h6 class="agency-name">
+                            <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                            <span class="">Name of Agency</span>
+                        </h6>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center flex-column">
+                        <p>
+                            <span class="title">Actual Price: </span>
+                            <span class="value">$750</span>
+                        </p>
+                        <p>
+                            <span class="title">Selling Price: </span>
+                            <span class="value">$900</span>
+                        </p>
+                        <p>
+                            <span class="title">Sold For: </span>
+                            <span class="value">$1,200</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="card home-box">
+                <div class="card-body">
+                    <div>
+                        <h5>Short Description</h5>
+                        <h6 class="agency-name">
+                            <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                            <span class="">Name of Agency</span>
+                        </h6>
+                    </div>
+                    <div class="action-btns d-flex align-items-center justify-content-center flex-column">
+                        <a href="{% url 'review_home' '5' %}" class="btn btn-md review-btn">Review</a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="card home-box">
+                <div class="card-body">
+                    <h5>Short Description</h5>
+                    <button class="btn btn-md revie-btn">Review</button>
+                    <h6>
+                        <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                        Name of Agency
+                    </h6>
+                </div>
+            </div>
+            <div class="card home-box">
+                <div class="card-body">
+                    <h5>Short Description</h5>
+                    <button class="btn btn-md review-btn">Review</button>
+                    <h6>
+                        <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                        Name of Agency
+                    </h6>
+                </div>
+            </div>
+            <div class="card home-box">
+                <div class="card-body">
+                    <h5>Short Description</h5>
+                    <button class="btn btn-md review-btn">Review</button>
+                    <h6>
+                        <img src="{% static 'pages/media/twitter.png' %}" class="thumbnail" alt="name of agency">
+                        Name of Agency
+                    </h6>
+                </div>
+            </div> -->
+            
+        </div>
+    </div>
+</main>
+{% endblock %}

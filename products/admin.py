@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from products.models import Home, HomeAuditMessage
+from products.models import Home, HomeAuditMessage, Image, ImageAlbum
 
 
 # Register your models here.
 @admin.register(Home)
 class HomeAdmin(admin.ModelAdmin):
-    list_display = ['user', 'home_id', 'album', 'price', 'short_description', 'apartment_type', 'last_updated', 'date_added']
+    list_display = ['user', 'home_id', 'album', 'price', 'short_description', 'apartment_type', 'status', 'tags', 'last_updated', 'date_added']
     fieldsets = (
         (None, {"fields": ("user", "home_id")}),
-        (_("Main info"), {"fields": ("short_description", "price", 'apartment_type', 'album')}),
+        (_("Main info"), {"fields": ("short_description", "price", 'apartment_type', 'album', 'status')}),
         (
             _("Extra Info"),
             {
@@ -52,3 +52,19 @@ class HomeAuditMessageAdmin(admin.ModelAdmin):
     # )
     search_fields = ("home", 'last_updated')
     ordering = ("last_updated",)
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    model = Image
+    list_display = ["album", "image"]
+    fieldsets = (
+        (None, {"fields": ("album", "image")}),
+    )
+
+@admin.register(ImageAlbum)
+class ImageAdmin(admin.ModelAdmin):
+    model = ImageAlbum
+    list_display = ["album_hash"]
+    # fieldsets = (
+    #     (None, {"fields": ("album", "image")}),
+    # )

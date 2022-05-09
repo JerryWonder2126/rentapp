@@ -1,12 +1,16 @@
+from pyexpat import model
+from django.http import Http404
 from django.shortcuts import redirect, render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
+from django.views import View
+from django.utils.decorators import method_decorator
 
 from accounts.forms import PublicCustomUserChangeForm
 from pages.decorator import is_group, is_verified
 from products.forms import HomeForm
+from products.models import ImageAlbum, Home
 
 # Create your views here.
 
@@ -19,6 +23,77 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         return context
 
+
+
+class Dashboard(View):
+
+    MAX_NUMBER_OF_IMAGES = 6
+    MIN_NUMBER_OF_IMAGES = 4
+
+    @method_decorator(login_required)
+    @method_decorator(is_verified)
+    @method_decorator(is_group(['User']))
+    def get(self, request):
+        return render(request, 'pages/dashboard.html')
+    
+
+    @method_decorator(login_required)
+    @method_decorator(is_verified)
+    @method_decorator(is_group(['User']))
+    def post(self, request):
+        context = {
+            "show_form": True
+        }
+        homeForm = HomeForm()
+        # print(request.POST)
+        if request.POST:
+            
+            homeForm = HomeForm(request.POST, request.FILES)
+            images_length = len(request.FILES)
+            image_error = None
+            if not self.MIN_NUMBER_OF_IMAGES <= images_length <= self.MAX_NUMBER_OF_IMAGES:
+                image_error = "Number of images must be at least four" 
+            if homeForm.is_valid() and not image_error:
+                print(homeForm.cleaned_data)
+                try:
+                    album = self.create_image_album(request.FILES)
+                    homeForm.save(request.user, album)
+                    
+                except Exception as e:
+                    print(e)
+                return redirect(to='user_homes_list')
+        context['home_form'] = homeForm
+        context['image_error'] = image_error
+        return render(request, 'pages/dashboard.html', context)
+
+    def create_image_album(self, images):
+        album = ImageAlbum()
+        album.save(images)
+        return album
+
+
+class UserHomeList(ListView):
+    model = Home
+    template_name = 'pages/list-home-for-review-user.html'
+
+
+class AdminHomeList(ListView):
+    template_name = 'pages/list-home-admin.html'
+    # context_object_name = 'home_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        status = self.kwargs['status']
+        context[status] = True
+        print(context)
+        return context
+    
+    def get_queryset(self):
+        status = self.kwargs['status']
+        print(status)
+        if status not in Home.STATUS_TAGS.keys():
+            raise Http404()
+        return Home.objects.filter(status=status)
 
 def faqs(request):
     return render(request, 'pages/faqs.html')
@@ -46,13 +121,6 @@ def offers(request, group, filterby, filter):
     context['group'] = group
     context['filter'] = filter
     return render(request, 'pages/list-offers.html', context)
-
-
-@login_required
-@is_verified
-@is_group(['User', 'Staff'])
-def dashboard(request):
-    return render(request, 'pages/dashboard.html', {'resp': 'Hello'})
 
 
 @login_required
@@ -177,26 +245,3 @@ def mark_as_staff(request):
         user = get_user_model().objects.get(email=email)
         user.mark_as_staff()
     return redirect(to="index")
-
-
-@login_required
-@is_verified
-@is_group('User')
-def add_home(request):
-    context = {
-        "show_form": True
-    }
-    homeForm = HomeForm()
-    # print(request.POST)
-    if request.POST:
-        
-        homeForm = HomeForm(request.POST, request.FILES)
-        print(request.FILES)
-        image_error = "Number of images must be at least four" if len(request.FILES) < 4 else False
-        if homeForm.is_valid() and not image_error:
-            print(homeForm.cleaned_data)
-            # return redirect(to='user_homes_list')
-    context['home_form'] = homeForm
-    context['image_error'] = image_error
-    return render(request, 'pages/dashboard.html', context)
-

@@ -42,4 +42,17 @@ $(() => {
     });
     // END OF FOR FAQs PAGE
 
+    $(() => {   // Loads tags attached to homes dynamically into dom for /home route
+        let tagsDiv = $(".home-tags");
+        $.each(tagsDiv, function (index, tagDiv) { 
+            let tags = $(tagDiv).attr('data-tags');
+            if (tags) {
+                let tagsList = tags.split(', ');
+                $.each(tagsList, function (index, tag) { 
+                    $(tagDiv).append(`<span class="home-tag ${tag}">${tag}</span>`);
+                }); 
+            }
+        });
+    });
+
 });
