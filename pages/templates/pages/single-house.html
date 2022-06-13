@@ -18,11 +18,13 @@
                 </div>
             </div>
             <div class="col-12">
+                <!-- {% for h in home %}
+                {{ h.image.url }}
+                {% endfor %} -->
                 <div id="offerCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         {% for image in images %}
-                        {% static image as static_url %}
-                        <div style="background-image: url({{static_url}});" class="carousel-item product-image"></div>
+                        <div style="background-image: url({{image.image.url}});" class="carousel-item product-image"></div>
                         {% endfor %}
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#offerCarousel" data-bs-slide="prev">

@@ -54,11 +54,11 @@ def add_group(sender, instance, created, **kwargs):
     """
     Adds group to user model when created based on is_superuser status
     """
-    user_group_status = Group.objects.get(name='User')
-    staff_group_status = Group.objects.get(name='Staff')
+    user_group_status = Group.objects.get_or_create(name='User')
+    staff_group_status = Group.objects.get_or_create(name='Staff')
     if created:
         if instance.is_superuser:
-            instance.groups.add(staff_group_status)
+            instance.groups.add(staff_group_status[0])
         else:
-            instance.groups.add(user_group_status)
+            instance.groups.add(user_group_status[0])
         instance.save()

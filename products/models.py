@@ -23,6 +23,7 @@ class ImageAlbum(models.Model):
         super(ImageAlbum, self).save(*args, **kwargs)
         for image in album_images:
             Image.objects.create(image=image, album=self)
+            
         
         return self
     

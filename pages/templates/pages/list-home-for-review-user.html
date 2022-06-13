@@ -15,7 +15,7 @@
             <div class="card user-home-box">
                 <div class="card-body">
                     <div>
-                        <h5><a href="{% url 'single_product' 'group' '56' %}?preview=true" class="">{{home.short_description}}</a></h5>
+                        <h5><a href="{% url 'single_product' 'home' home.home_id %}?preview=true" class="">{{home.short_description}}</a></h5>
                         {% if home.reviewing %}
                         <p><a href="{% url 'review_home_user' home.home_id %}">Click here to settle issues on your home</a></p>
                         {% endif %}

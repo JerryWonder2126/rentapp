@@ -1,6 +1,5 @@
 def get_upload_path(instance, filename):
     
-    model = instance.album.model.__class__.meta
-    name = model.verbose_name_plural.replace(' ', '_')
+    name = 'rentapp_image_album'
 
     return f"{name}/images/{filename}"

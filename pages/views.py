@@ -11,7 +11,7 @@ from accounts.forms import PublicCustomUserChangeForm
 from pages.decorator import is_group
 from pages.helpers import create_album
 from products.forms import HomeForm, HomeAuditForm
-from products.models import Home, HomeAuditMessage
+from products.models import Home, HomeAuditMessage, Image
 
 
 # Create your views here.
@@ -43,8 +43,6 @@ class Dashboard(View):
             'homes_not_sold': homes_not_sold
         }
 
-        print(context)
-
         return render(request, 'pages/dashboard.html', context)
     
 
@@ -55,12 +53,13 @@ class Dashboard(View):
         }
             
         homeForm = HomeForm(request.POST)
-        images_length = len(request.FILES)
+        image_files = [request.FILES[file] for file in request.FILES]
+        images_length = len(image_files)
         image_error = None
         if not self.MIN_NUMBER_OF_IMAGES <= images_length <= self.MAX_NUMBER_OF_IMAGES:
             image_error = "Number of images must be at least four" 
         if homeForm.is_valid() and not image_error:
-            album = create_album(request.FILES)
+            album = create_album(image_files)
             homeForm.save(request.user, album)
             return redirect(to='user_homes_list')
         context['home_form'] = homeForm
@@ -245,8 +244,14 @@ def products_page(request, group=''):
 def house_page(request, group, identifier):
     """Handles sale of an home. Page where user starts negotiation on home."""
     # Just for now, ideally house object should be passed across
-    images = ['pages/media/wedoimg.jpg', 'pages/media/contact.jpg', 'pages/media/deal.jpg', 'pages/media/missionimg.jpg'] 
-    return render(request, 'pages/single-house.html', {'images': images})
+    album = Home.objects.get(user=request.user, home_id=identifier).album
+    home_images = Image.objects.filter(album=album)
+    # images = ['pages/media/wedoimg.jpg', 'pages/media/contact.jpg', 'pages/media/deal.jpg', 'pages/media/missionimg.jpg'] 
+    # images = []
+    # for image_obj in home_images:
+    #     print(image_obj.image.url)
+    #     images.append(f"pages/media/{image_obj.image.url}")
+    return render(request, 'pages/single-house.html', {'images': home_images})
 
 
 def offers(request, group, filterby, filter):
