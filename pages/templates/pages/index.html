@@ -9,7 +9,8 @@
             <div id="homeCarousel" class="carousel slide p-0" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item product-image active">
-                        <div style="background-image: url('/static/pages/media/deal.jpg');">
+                        {% static 'pages/media/deal.jpg' as static_url %}
+                        <div style="background-image: url({{static_url}});">
                             <!-- <img src="{% static 'pages/media/deal.jpg' %}" class="img-fluid"> -->
                             <div>
                                 <p class="text-success">Are you a land or home owner? Rent or sell your home and land with us.</p>
@@ -18,7 +19,8 @@
                         </div>
                     </div>
                     <div class="carousel-item product-image">
-                        <div style="background-image: url('/static/pages/media/wedoimg.jpg');">
+                        {% static 'pages/media/wedoimg.jpg' as static_url1 %}
+                        <div style="background-image: url({{static_url1}});">
                             <!-- <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid"> -->
                             <div>
                                 <p class="text-white">house rent</p>
@@ -26,7 +28,8 @@
                         </div>
                     </div>
                     <div class="carousel-item product-image coming-soon">
-                        <div style="background-image: url('/static/pages/media/missionimg.jpg');">
+                        {% static 'pages/media/missionimg.jpg' as static_url2 %}
+                        <div style="background-image: url({{static_url2}});">
                             <!-- <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid"> -->
                             <div>
                                 <p class="text-white">property purchase</p>
@@ -34,7 +37,8 @@
                         </div>
                     </div>
                     <div class="carousel-item product-image coming-soon">
-                        <div style="background-image: url('/static/pages/media/second-intro.jpg');">
+                        {% static 'pages/media/second-intro.jpg' as static_url3 %}
+                        <div style="background-image: url({{static_url3}});">
                             <!-- <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid"> -->
                             <div>
                                 <p class="text-white">estate development</p>
@@ -42,9 +46,11 @@
                         </div>
                     </div>
                     <div class="carousel-item product-image coming-soon">
-                        <div style="background-image: url('/static/pages/media/intro.jpg');">
+                        {% static 'pages/media/intro.jpg' as static_url4 %}
+                        <div style="background-image: url({{static_url4}});">
                             <!-- <img src="{% static 'pages/media/wedoimg.jpg' %}" class="img-fluid"> -->
                             <div>
+                                
                                 <p class="text-white">interior decoration</p>
                             </div>
                         </div>

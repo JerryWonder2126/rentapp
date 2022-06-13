@@ -6,4 +6,6 @@ $(() => {
             $('.negotiation-btn').hide();
         }
     });
+
+    $('.carousel-item').first().addClass('active');
 });

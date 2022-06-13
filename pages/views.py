@@ -243,7 +243,10 @@ def products_page(request, group=''):
 
 
 def house_page(request, group, identifier):
-    return render(request, 'pages/single-house.html', {'resp': 'Hello'})
+    """Handles sale of an home. Page where user starts negotiation on home."""
+    # Just for now, ideally house object should be passed across
+    images = ['pages/media/wedoimg.jpg', 'pages/media/contact.jpg', 'pages/media/deal.jpg', 'pages/media/missionimg.jpg'] 
+    return render(request, 'pages/single-house.html', {'images': images})
 
 
 def offers(request, group, filterby, filter):
