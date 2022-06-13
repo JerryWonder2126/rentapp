@@ -157,25 +157,26 @@ if DEVELOPMENT_MODE:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-    SERVER_EMAIL = 'noreply@rentyourhouse.com'
-    DEFAULT_FROM_EMAIL = SERVER_EMAIL
-    ADMINS = []
-    admins = os.getenv('ADMIN_LIST') | []
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+SERVER_EMAIL = 'noreply@rentyourhouse.com'
+DEFAULT_FROM_EMAIL = SERVER_EMAIL
+ADMINS = []
+admins = os.getenv('ADMINS')
+if admins:
     for admin in admins.split('|'):
         admin_details = admin.split(',')
-        ADMINS.push(tuple(admin_details))
-    
-    MANAGERS = ADMINS
+        ADMINS.append(tuple(admin_details))
 
-    # EMAIL_HOST = 
-    # EMAIL_PORT = 
-    # EMAIL_HOST_USER =
-    # EMAIL_HOST_PASSWORD = 
-    # EMAIL_USE_TLS = 
-    # EMAIL_USE_SSL = 
-    # EMAIL_TIMEOUT = 
-    # EMAIL_SSL_KEYFILE = 
-    # EMAIL_SSL_CERTIFICATE = 
+MANAGERS = ADMINS
+
+EMAIL_HOST = 'smtp.mail.yahoo.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
+# EMAIL_TIMEOUT = 5
 
 AUTHENTICATION_BACKENDS = {
     "django.contrib.auth.backends.ModelBackend",
