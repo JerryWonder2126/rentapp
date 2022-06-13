@@ -1,5 +1,5 @@
 {% extends 'pages/base.html' %}
-
+{% load static %}
 {% block content %}
 <main>
     <div class="container-fluid">
@@ -13,7 +13,7 @@
                 <p>Congratulations, your home have passed the first stage of the review process</p>
                 <p>Now, we have to make some confirmations physically</p>
                 <p><a href="#">Click here to place a call with us now</a> or <a href="#">Connect with us on whatsapp</a></p>
-                <p class="text-secondary">if you're done with this stage already, kindly exercise a little patience with us, your dashboard will be updated very soon.</p>
+                <p class="text-secondary">If you're done with this stage already, kindly exercise a little patience with us, your dashboard will be updated very soon.</p>
             </div>
             {% endif %}
             {% if on_sale_ready %}
@@ -24,14 +24,13 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th class="title">house type</th>
-                            <td class="value">Bungalow</td>
+                            <th class="title">apartment type</th>
+                            <td class="value">{{ home.apartment_type }}</td>
                         </tr>
                         <tr>
                             <th class="title">Address</th>
                             <td class="value">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident voluptatibus 
-                                vel voluptatum.
+                                {{ home.address }}
                             </td>
                         </tr>
                         <tr>
@@ -46,11 +45,16 @@
                 </table>
                 <p>Does anything seem wrong? <a href="#">File a complaint</a></p>
                 <div class="d-flex justify-content-right">
-                    <button class="btn btn-md btn-primary">confirm</button>
+                    <button class="btn btn-md btn-primary confirm-home">confirm</button>
                 </div>
             </div>
             {% endif %}
         </div>
     </div>
 </main>
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script src="{% static 'pages/js/dashboard.js' %}"></script>
 {% endblock %}

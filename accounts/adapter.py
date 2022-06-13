@@ -1,11 +1,6 @@
 from allauth.account.adapter import DefaultAccountAdapter
 
-from accounts.helpers import getUsernameFromEmail
-
-
 class UserAccountAdapter(DefaultAccountAdapter):
-    def vrt():
-        pass
     def save_user(self, request, user, form, commit=True):
         user = super(UserAccountAdapter, self).save_user(request, user, form, commit=False)
         # user.first_name = self.cleaned_data['first_name']

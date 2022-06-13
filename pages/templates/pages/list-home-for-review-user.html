@@ -15,15 +15,27 @@
             <div class="card user-home-box">
                 <div class="card-body">
                     <div>
-                        <h5>{{home.short_description}}</h5>
-                        <a href="{% url 'single_product' 'group' '56' %}?preview=true" class="btn">preview</a>
+                        <h5><a href="{% url 'single_product' 'group' '56' %}?preview=true" class="">{{home.short_description}}</a></h5>
+                        {% if home.reviewing %}
+                        <p><a href="{% url 'review_home_user' home.home_id %}">Click here to settle issues on your home</a></p>
+                        {% endif %}
+                        {% if home.review_updated %}
+                        <p>wait for admin to confirm/update this home</p>
+                        {% endif %}
+                        {% if home.on_site %}
+                        <p><a href="{% url 'confirm_home_on_site' home.home_id %}">Click here to start/resume on-site review process</a></p>
+                        {% endif %}
+                        {% if home.passed_review %}
+                        <p><a href="{% url 'confirm_home_on_sale' home.home_id %}">Click here to put home on sale</a></p>
+                        {% endif %}
                     </div>
                     <div data-tags="{{ home.tags }}" class="home-tags"></div>
                 </div>
             </div>
             {% endfor %}
             {% endif %}
-            <div class="card user-home-box">
+            {% comment %}
+            <!-- <div class="card user-home-box">
                 <div class="card-body">
                     <div>
                         <h5>Short Description</h5>
@@ -82,7 +94,8 @@
                         <span class="home-tag on-review">on-review</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            {% endcomment %}
         </div>
     </div>
 </main>

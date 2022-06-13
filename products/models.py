@@ -83,22 +83,92 @@ class Home(models.Model):
     last_updated = models.DateField(_("last_updated"), auto_now=True)
 
     def __str__(self):
-        return str(self.home_id)
+        return str(self.short_description)
     
     def save(self, **kwargs) -> None:
-        self.tags = self.STATUS_TAGS[self.status]
+        self.set_tags()
         return super().save(**kwargs)
+    
+    def set_tags(self):
+        self.tags = self.STATUS_TAGS[self.status]
+    
+    def pass_remote_review(self, commit=True):
+        """ Changes home status to 'onsite_review' """
+        self.status = self.Status.ONSITE_REVIEW
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+
+    def pass_review(self, commit=True):
+        """ Changes home status to 'passed_review' """
+        self.status = self.Status.PASSED_REVIEW
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+    
+    def breakdown_review(self, commit=True):
+        """ Reverts home status to 'not_reviewed' """
+        self.status = self.Status.NOT_REVIEWED
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+    
+    def mark_as_onremote_review(self, commit=True):
+        """ Changes home status to 'passed_review' """
+        self.status = self.Status.REMOTE_REVIEW
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+    
+    def mark_as_updated_review(self, commit=True):
+        """ Changes home status to 'passed_review' """
+        self.status = self.Status.UPDATED_FOR_REVIEW
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+    
+    def to_on_sale(self, commit=True):
+        """ Changes home status to 'on sale'  """
+        self.status = self.Status.ON_SALE
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+    
+    def mark_as_ongoing(self, commit=True):
+        """ Changes home status to 'ongoing', i.e negotiations has begun """
+        self.status = self.Status.ONGOING
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
+    
+    def mark_as_sold(self, commit=True):
+        """ Marks home as sold """
+        self.status = self.Status.SOLD
+        self.set_tags()
+        if commit:
+            self.save()
+        return self
 
 
 class HomeAuditMessage(models.Model):
     home = models.OneToOneField(Home, models.CASCADE)
-    price_msg = models.TextField(_("price message"), null=True)
-    album_msg = models.TextField(_("album message"), null=True)
-    short_description_msg = models.TextField(_("short description message"), null=True)
-    address_msg = models.TextField(_("address message") , null=True)
-    apartment_type_msg = models.TextField(_("aparment type message"), null=True)
-    selling_point_msg = models.TextField(_("selling point message"), null=True)
+    price_msg = models.TextField(_("price message"), null=True, blank=True)
+    album_msg = models.TextField(_("album message"), null=True, blank=True)
+    short_description_msg = models.TextField(_("short description message"), null=True, blank=True)
+    address_msg = models.TextField(_("address message") , null=True, blank=True)
+    apartment_type_msg = models.TextField(_("aparment type message"), null=True, blank=True)
+    selling_point_msg = models.TextField(_("selling point message"), null=True, blank=True)
     last_updated = models.DateField(_("last_updated"), auto_now=True)
+
+    def __str__(self):
+        return f"{self.home.short_description} audit message"
 
 
 @receiver(post_save, sender=Home)

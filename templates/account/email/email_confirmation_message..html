@@ -1,0 +1,23 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}
+{% autoescape off %}
+{% user_display user as user_display %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+<p>
+    You're receiving this e-mail because someone has given your e-mail address to 
+    register an account with us at {{ site_domain }}.
+</p>
+
+<p>To confirm this is you, click on the "activate your account" button below <a href="{{ activate_url }}"></a> to activate your account</p>
+
+<button>Activate Your Account</button>
+
+<p><em><b>If it wasn't you, simply ignore this message.</b></em></p>
+
+{% endblocktrans %}{% endautoescape %}{% endblock %}
+
+
+

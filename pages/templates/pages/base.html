@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="rent or buy your home without much hassle"/>
     <meta name='viewport' content='width=device-width,initial-scale=1,shrink-to-fit=no'>
-    <title>RentYourHouse</title>
+    <title>{% block head_title %}RentYourHouse{% endblock %}
+</title>
     <!-- <link rel="stylesheet" href="{% static 'pages/css/cssreset-meyers.css' %}"> -->
     <link rel="stylesheet" href="{% static 'pages/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'pages/css/index.css' %}">
+    {% block extra_styles %} {% endblock %}
 </head>
 <body>
 
@@ -27,6 +29,7 @@
     <!-- <script src="{% static 'pages/js/jquery.film_roll.min.js' %}"></script> -->
     <!-- <script src="{% static 'pages/js/jquery.touchSwipe.min.js' %}"></script> -->
     <script src="{% static 'pages/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'pages/js/cookies.js' %}"></script>
     <script src="{% static 'pages/js/index.js' %}"></script>
     {% block extra_scripts %} {% endblock %}
 

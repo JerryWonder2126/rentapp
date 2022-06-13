@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from re import T
 import sys
 from dotenv import load_dotenv
 import dj_database_url
@@ -72,7 +73,7 @@ ROOT_URLCONF = 'rentapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,7 +152,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Django-AllAuth Settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if DEVELOPMENT_MODE:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+    SERVER_EMAIL = 'noreply@rentyourhouse.com'
+    DEFAULT_FROM_EMAIL = SERVER_EMAIL
+    ADMINS = []
+    admins = os.getenv('ADMIN_LIST') | []
+    for admin in admins.split('|'):
+        admin_details = admin.split(',')
+        ADMINS.push(tuple(admin_details))
+    
+    MANAGERS = ADMINS
+
+    # EMAIL_HOST = 
+    # EMAIL_PORT = 
+    # EMAIL_HOST_USER =
+    # EMAIL_HOST_PASSWORD = 
+    # EMAIL_USE_TLS = 
+    # EMAIL_USE_SSL = 
+    # EMAIL_TIMEOUT = 
+    # EMAIL_SSL_KEYFILE = 
+    # EMAIL_SSL_CERTIFICATE = 
 
 AUTHENTICATION_BACKENDS = {
     "django.contrib.auth.backends.ModelBackend",
@@ -172,6 +196,7 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ADAPTER = 'accounts.adapter.UserAccountAdapter'
 
 if DEVELOPMENT_MODE is None:

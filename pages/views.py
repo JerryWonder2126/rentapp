@@ -1,6 +1,6 @@
-from pyexpat import model
-from django.http import Http404
-from django.shortcuts import redirect, render
+import re
+from django.http import Http404, JsonResponse
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -8,9 +8,11 @@ from django.views import View
 from django.utils.decorators import method_decorator
 
 from accounts.forms import PublicCustomUserChangeForm
-from pages.decorator import is_group, is_verified
-from products.forms import HomeForm
-from products.models import ImageAlbum, Home
+from pages.decorator import is_group
+from pages.helpers import create_album
+from products.forms import HomeForm, HomeAuditForm
+from products.models import Home, HomeAuditMessage
+
 
 # Create your views here.
 
@@ -30,53 +32,58 @@ class Dashboard(View):
     MAX_NUMBER_OF_IMAGES = 6
     MIN_NUMBER_OF_IMAGES = 4
 
-    @method_decorator(login_required)
-    @method_decorator(is_verified)
-    @method_decorator(is_group(['User']))
+    @method_decorator([login_required, is_group(['User'])])
     def get(self, request):
-        return render(request, 'pages/dashboard.html')
+        user_homes = Home.objects.filter(user=request.user)
+        homes_not_sold = user_homes.exclude(status=Home.Status.SOLD).count()
+        homes_sold = user_homes.filter(status=Home.Status.SOLD).count()
+
+        context = {
+            'homes_sold': homes_sold,
+            'homes_not_sold': homes_not_sold
+        }
+
+        print(context)
+
+        return render(request, 'pages/dashboard.html', context)
     
 
-    @method_decorator(login_required)
-    @method_decorator(is_verified)
-    @method_decorator(is_group(['User']))
+    @method_decorator([login_required, is_group(['User'])])
     def post(self, request):
         context = {
-            "show_form": True
+            "show_form": True   # This makes the form visible on page
         }
-        homeForm = HomeForm()
-        # print(request.POST)
-        if request.POST:
             
-            homeForm = HomeForm(request.POST, request.FILES)
-            images_length = len(request.FILES)
-            image_error = None
-            if not self.MIN_NUMBER_OF_IMAGES <= images_length <= self.MAX_NUMBER_OF_IMAGES:
-                image_error = "Number of images must be at least four" 
-            if homeForm.is_valid() and not image_error:
-                print(homeForm.cleaned_data)
-                try:
-                    album = self.create_image_album(request.FILES)
-                    homeForm.save(request.user, album)
-                    
-                except Exception as e:
-                    print(e)
-                return redirect(to='user_homes_list')
+        homeForm = HomeForm(request.POST)
+        images_length = len(request.FILES)
+        image_error = None
+        if not self.MIN_NUMBER_OF_IMAGES <= images_length <= self.MAX_NUMBER_OF_IMAGES:
+            image_error = "Number of images must be at least four" 
+        if homeForm.is_valid() and not image_error:
+            album = create_album(request.FILES)
+            homeForm.save(request.user, album)
+            return redirect(to='user_homes_list')
         context['home_form'] = homeForm
         context['image_error'] = image_error
         return render(request, 'pages/dashboard.html', context)
 
-    def create_image_album(self, images):
-        album = ImageAlbum()
-        album.save(images)
-        return album
 
-
+@method_decorator([login_required, is_group(['User'])], name='dispatch')
 class UserHomeList(ListView):
     model = Home
     template_name = 'pages/list-home-for-review-user.html'
 
+    def get_queryset(self):
+        homes = super().get_queryset().filter(user=self.request.user)
+        for  home in homes:
+            home.reviewing = True if home.status == 'remote_review' else False
+            home.review_updated = True if home.status in ['updated_for_review', 'not_reviewed'] else False
+            home.on_site = True if home.status == 'onsite_review' else False
+            home.passed_review = True if home.status == 'passed_review' else False
+        return homes
 
+
+@method_decorator([login_required, is_group(['Staff'])], name='dispatch')
 class AdminHomeList(ListView):
     template_name = 'pages/list-home-admin.html'
     # context_object_name = 'home_list'
@@ -85,15 +92,142 @@ class AdminHomeList(ListView):
         context = super().get_context_data(**kwargs)
         status = self.kwargs['status']
         context[status] = True
-        print(context)
         return context
     
     def get_queryset(self):
         status = self.kwargs['status']
-        print(status)
         if status not in Home.STATUS_TAGS.keys():
             raise Http404()
         return Home.objects.filter(status=status)
+
+
+class AuditHomeAdmin(View):
+
+    @method_decorator([login_required, is_group(['Staff'])])
+    def get(self, request, unique_home_hash):
+        home = get_object_or_404(Home, home_id=unique_home_hash)
+        homeAudit = HomeAuditMessage.objects.get(home=home)
+        form = HomeAuditForm(instance=homeAudit)
+        context = {
+            'form': form,
+            'home': home,
+            'prefill': form.initial
+        }
+        return render(request, 'pages/review-home-staff.html', context)
+
+    @method_decorator([login_required, is_group(['Staff'])])
+    def post(self, request, unique_home_hash):
+        home = get_object_or_404(Home, home_id=unique_home_hash)
+        homeAudit = HomeAuditMessage.objects.get(home=home)
+        form = HomeAuditForm(request.POST, instance=homeAudit)
+        if form.is_valid():
+            form.save(home=home)
+            return redirect('review_list', status='remote_review')
+        context = {
+            'form': form,
+            'home': home,
+            'prefill': form.data
+        }
+        return render(request, 'pages/review-home-staff.html', context)
+
+
+class AuditHomeUser(View):
+
+    @method_decorator([login_required, is_group(['User'])])
+    def get(self, request, unique_home_hash):
+        home = get_object_or_404(Home, home_id=unique_home_hash, user=request.user)
+        homeAudit = HomeAuditMessage.objects.get(home=home)
+        form = HomeForm(instance=home)
+        context = {
+            'home_form': form,
+            'audit': homeAudit,
+            'prefill': form.initial
+        }
+        return render(request, 'pages/review-home-user.html', context)
+
+    @method_decorator([login_required, is_group(['User'])])
+    def post(self, request, unique_home_hash):
+        home = get_object_or_404(Home, home_id=unique_home_hash, user=request.user)
+        homeAudit = HomeAuditMessage.objects.get(home=home)
+        form = HomeForm(request.POST, instance=home)
+        images_length = len(request.FILES)
+        image_error = None
+        if homeAudit.album_msg:
+            if not self.MIN_NUMBER_OF_IMAGES <= images_length <= self.MAX_NUMBER_OF_IMAGES:
+                image_error = "Number of images must be at least four" 
+        if form.is_valid() and not image_error:
+            album = create_album(request.FILES, home.album.album_hash) if homeAudit.album_msg else None
+            home = form.save(request.user, album, False)
+            home.mark_as_updated_review()   # This saves the user and changes it's status
+            return redirect(to='user_homes_list')
+        context = {
+            'home_form': form,
+            'audit': homeAudit,
+            'prefill': form.data
+        }
+        context['image_error'] = image_error
+        return render(request, 'pages/review-home-user.html', context)
+    
+    
+class ConfirmHomeOnSale(View):
+
+    @method_decorator([login_required, is_group(['User'])])
+    def get(self, request, home_unique_hash):
+        home = get_object_or_404(Home, home_id=home_unique_hash, user=request.user)
+        
+        context = {
+            'on_sale_ready': True,
+            'home': home
+        }
+
+        return render(request, 'pages/user-confirm-home.html', context)
+    
+    @method_decorator([login_required, is_group(['User'])])
+    def post(self, request, home_unique_hash):
+        response = {'ok': True}
+        try:
+            home = get_object_or_404(Home, home_id=home_unique_hash, user=request.user)
+            home.to_on_sale()
+        except Exception as e:
+            response['ok'] = False
+        return JsonResponse(response)
+
+
+class UserConfirmHomeOnSite(View):
+
+    @method_decorator([login_required, is_group(['User'])])
+    def get(self, request, home_unique_hash):
+        home = get_object_or_404(Home, home_id=home_unique_hash, user=request.user)
+        
+        context = {
+            'on_site_ready': True,
+            'home': home
+        }
+
+        return render(request, 'pages/user-confirm-home.html', context)
+
+
+@login_required
+@is_group(['Staff'])
+def takeActionOnHome(request, action, unique_home_hash):
+    if action not in ['pass_review', 'breakdown_review', 'pass_remote_review', 'to_onsale', 'ongoing', 'complete']:
+        raise Http404()
+    home = get_object_or_404(Home, home_id=unique_home_hash)
+    if action == 'pass_review':
+        home.pass_review()
+    elif action == 'breakdown_review':
+        home.breakdown_review()
+    elif action == 'pass_remote_review':
+        home.pass_remote_review()
+        return redirect('review_list', status='onsite_review')
+    elif action == 'to_onsale':
+        home.to_on_sale()
+    elif action == 'ongoing':
+        home.mark_as_ongoing()
+    elif action == 'complete':
+        home.mark_as_sold()
+    return redirect(request.META['HTTP_REFERER'])
+
 
 def faqs(request):
     return render(request, 'pages/faqs.html')
@@ -124,99 +258,27 @@ def offers(request, group, filterby, filter):
 
 
 @login_required
-@is_verified
-@is_group(['Staff'])
-def listHomesForReview(request, group):
-    context = {}
-    if group == 'fresh':
-        page_title = 'Not Reviewed'
-    elif group == 'started':
-        page_title = 'On Review'
-    elif group == 'updated':
-        page_title = 'Updated for review'
-    elif group == 'on_site':
-        page_title = 'On-site Review'
-        context['on_site'] = True
-    context['page_title'] = page_title
-    return render(request, 'pages/list-home-for-review.html', context)
 
-
-@login_required
-@is_verified
-@is_group(['Staff'])
-def listHomesPassedReview(request):
-    return render(request, 'pages/passed-review.html', {'resp': 'Hello'})
-
-
-@login_required
-@is_verified
-@is_group(['Staff'])
-def listHomesOnSale(request):
-    return render(request, 'pages/on-sale.html', {'resp': 'Hello'})
-
-
-@login_required
-@is_verified
 @is_group(['User'])
-def listHomesUser(request):
-    return render(request, 'pages/list-home-for-review-user.html', {'resp': 'Hello'})
-
-
-@login_required
-@is_verified
-@is_group(['Staff'])
-def listHomesTransactionOngoing(request):
-    return render(request, 'pages/transaction-ongoing.html', {'resp': 'Hello'})
-
-
-@login_required
-@is_verified
-@is_group(['Staff'])
-def listHomesSold(request):
-    return render(request, 'pages/sold.html', {'resp': 'Hello'})
-
-
-@login_required
-@is_verified
-@is_group(['User'])
-def userConfirmHome(request, confirm_type):
-    context = {}
-
-    if confirm_type == 'on_sale':
-        context['on_sale_ready'] = True
-    elif confirm_type == 'on_site':
-        context['on_site_ready'] = True
+def userConfirmHome(request):
+    context = {
+        'on_site_ready': True
+    }
     
     return render(request, 'pages/user-confirm-home.html', context)
 
 
-@login_required
-@is_verified
-@is_group(['Staff'])
-def reviewHomeStaff(request, unique_id='2'):
-    context = {
-        'price': '$34,000',
-        'address': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident voluptatibus vel voluptatum.'
-    }
-    return render(request, 'pages/review-home-staff.html', context)
+class UserConfirmHomeOnSite(TemplateView):
+    template_name = 'pages/user-confirm-home.html'
 
-@login_required
-@is_verified
-@is_group(['User'])
-def reviewHomeUser(request, unique_id='2'):
-    context = {
-        'priceMessage': '',
-        'sellingPointsMessage': 'foolish thing',
-        'imagesMessage': 'Images are not clear',
-        'locationMessage': 'Where is this place? It is unrecognizable',
-        'descriptionMessage': '',
-        'addressMessage': 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident voluptatibus vel voluptatum.'
-    }
-    return render(request, 'pages/review-home-user.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['on_site_ready'] = True
+        return context
 
 
 @login_required
-@is_verified
+
 @is_group(['User', 'Staff'])
 def profile(request, unique_id='2'):
 
@@ -237,7 +299,7 @@ def profile(request, unique_id='2'):
 
 
 @login_required
-@is_verified
+
 @is_group('Staff')
 def mark_as_staff(request):
     if request.POST:

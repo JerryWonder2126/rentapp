@@ -25,16 +25,21 @@ $(() => {
         }
     });
 
+    $(".upload-form").hide();   // Hide the upload form on page load
+
     $(() => {
         const addHomeForm = $('form');
         const show_form = addHomeForm.attr('data-show') ? addHomeForm.attr('data-show').toLowerCase() : '';
         if (show_form === 'true') {
-            $('#uploadHome').click();
+            const uploadHomeBtn = $('#uploadHome');
+            if (uploadHomeBtn.length) {
+                $('#uploadHome').click();
+            } else {    // Works for the user audit home page
+                $(".upload-form, footer, .upload-form .details-section").toggle();
+
+            }
         }
     });
-
-
-    $(".upload-form").hide();   // Hide the upload form on page load
     
     $("#uploadHome").on("click", (ev) => {
         $(".upload-form, .page-content, footer, .upload-form .details-section").toggle();
@@ -65,8 +70,10 @@ $(() => {
         const action = $(ev.target).attr("data-action");
         if (action === "next") {
             let first_section_valid = image_count >= MIN_NUMBER_OF_IMAGES;
-            // let first_section_valid = true;
-            if (first_section_valid) {
+            /* This only applies to User Audit Home Page */
+            let image_valid_state = $('.image-section').attr("data-defaultValidState") == "true";
+            /* End of short section */
+            if (first_section_valid || image_valid_state) {
                 $(".image-section, .details-section").toggle();
                 $(ev.target).attr("data-action", "submit");
                 $(ev.target).text("submit");
@@ -105,5 +112,19 @@ $(() => {
             alert("Maximum number of images reached");
         }
     });
+
+    $('.confirm-home').on('click', (ev) => {    
+        // Runs when user clicks the confirm button on the home confirm page after successful review
+        let data = {
+            'csrfmiddlewaretoken': Cookies.get('csrftoken')
+        }
+        $.post(location.href, data, (response) => {    // This puts home on-sale, and redirects back to user home list page
+            if (response.ok) {
+                location.replace('/homes/')
+            } else {
+                alert('Sorry, operation failed.')
+            }
+        });
+    })
 
 });

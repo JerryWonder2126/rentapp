@@ -1,92 +1,162 @@
 {% extends 'pages/base.html' %}
-
 {% load static %}
 
 {% block content %}
-<main>
-    <div class="container-fluid">
-        <div class="row g-1 my-3 product-images">
-            <h1>Review Home</h1>
-            <div class="">
-                <form>
-                    <form class="">
-                        <div class="image-section">
-                            <div class="mb-2">
-                                <label for="">kdl</label>
-                                {% if imagesMessage %}
-                                <p>{{ imagesMessage }}</p>
-                                <input type="file" class="form-control" name="image" id="">
-                                {% else %}
-                                good
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="details-section">
-                            <div class="mb-2">
-                                <label for="short_description">Short Description</label>
-                                {% if descriptionMessage %}
-                                <p>{{ descriptionMessage }}</p>
-                                <input type="text" name="short_description" id="short_description" maxlength="50" class="form-control">
-                                {% else %}
-                                good
-                                {% endif %}
-                            </div>
-                            <div class="mb-2">
-                                <label for="location">Location</label>
-                                {% if locationMessage %}
-                                <p>{{ locationMessage }}</p>
-                                <input type="text" name="location" class="form-control" id="location">
-                                {% else %}
-                                good
-                                {% endif %}
-                            </div>
-                            <div class="mb-2">
-                                <label for="price">Price</label>
-                                {% if priceMessage %}
-                                <p>{{ priceMessage }}</p>
-                                <input type="number" name="price" class="form-control" id="price">
-                                {% else %}
-                                good
-                                {% endif %}
-                            </div>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <label for="type" class="input-group-text">Apartment Type</label>
-                                </div>
-                                {% if apartmentMessage %}
-                                <p>{{ apartmentMessage }}</p>
-                                <select name="type" id="type" class="custom-select">
-                                    <option value="" selected>Choose...</option>
-                                    <option value="a room">a room</option>
-                                    <option value="face me and face you">face me and face you</option>
-                                    <option value="one bedroom self con">one bedroom self con</option>
-                                    <option value="two bedroom self con">two bedroom self con</option>
-                                    <option value="three bedroom self con">three bedroom self con</option>
-                                    <option value="duplex">duplex</option>
-                                    <option value="upstairs">upstairs</option>
-                                    <option value="bungalow">bungalow</option>
-                                </select>
-                                {% else %}
-                                good
-                                {% endif %}
-                            </div>
-                            <div class="mb-2">
-                                <label for="selling_points">Other selling points</label>
-                                {% if sellingPointsMessage %}
-                                <p>{{ sellingPointsMessage }}</p>
-                                <textarea name="selling_points" id="selling_points" rows="10" style="width: 100%;"></textarea>
-                                {% else %}
-                                good
-                                {% endif %}
-                            </div> 
-                            <div class="mb-3">
-                                <input type="button" value="back" class="btn btn-md btn-danger" onclick="backOneStep()">
-                                <input type="submit" value="update">
-                            </div>  
-                        </div>
-                    </form>
+<div class="container-fluid upload-form">
+    <form enctype="multipart/form-data" data-show="true" method="post">
+        {% if home_form.errors or image_error %}
+        <h5 class="text-danger">There are errors in your application form. Kindly address them, then submit again.</h5>
+        {% endif %}
+        {% csrf_token %}
+        <div class="image-section" data-defaultValidState="{% if not audit.album_msg %}true{% else %}false{% endif %}">
+            <div class="mb-2">
+                {% if not audit.album_msg %}
+                    <p>Your images are all good</p>
+                    <p>Click next to continue...</p>
+                {% else %}
+                    <h5>Upload home images</h5>
+                    <ul>
+                        <li>Image of Bathroom</li>
+                        <li>Image of kitchen</li>
+                        <li>Image of Living room</li>
+                        <li>Image of Surroundings</li>
+                        <li>Other relevant images</li>
+                    </ul>
+                    <div>
+                        <p>{{ audit.album_msg }}</p>
+                    </div>
+                    {% if image_error %}
+                    <div class="text-danger">
+                        <p>{{ image_error }}</p>
+                    </div>
+                    {% endif %}
+                    <button class="btn btn-primary add-image-btn">Add Image</button>
+                {% endif %}
             </div>
         </div>
+        <div class="details-section">
+            <div class="mb-2">
+                <label for="short_description">Short Description</label>
+                {% if not audit.short_description_msg %}
+                    <span>OK</span>
+                {% else %}
+                    <div>
+                        <p>{{ audit.short_description_msg }}</p>
+                    </div>
+                {% endif %}
+                {% if home_form.short_description.errors %}
+                    {% for error in home_form.short_description.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <input 
+                type="text" 
+                {% if prefill.short_description %} value="{{ prefill.short_description }}" {% endif %} 
+                name="short_description" id="short_description" maxlength="50" 
+                class="form-control form-field {% if home_form.short_description.errors %}error-field{% endif %} {% if not audit.short_description_msg %}audit-ok{% endif %}" 
+                required>
+                
+            </div>
+            <div class="mb-2">
+                <label for="address">Address</label>
+                {% if not audit.address_msg %}
+                    <span>OK</span>
+                {% else %}
+                    <div>
+                        <p>{{ audit.address_msg }}</p>
+                    </div>
+                {% endif %}
+                {% if home_form.address.errors %}
+                    {% for error in home_form.address.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <input 
+                type="text" 
+                name="address" {% if prefill.address %} value="{{ prefill.address }}" {% endif %}  
+                class="form-control form-field {% if home_form.address.errors %} error-field {% endif %} {% if not audit.address_msg %}audit-ok{% endif %}" 
+                id="address" required>
+                
+            </div>
+            
+            <div class="mb-2">
+                <label for="price">Price</label>
+                {% if not audit.price_msg %}
+                    <span>OK</span>
+                {% else %}
+                    <div>
+                        <p>{{ audit.price_msg }}</p>
+                    </div>
+                {% endif %}
+                {% if home_form.price.errors %}
+                    {% for error in home_form.price.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <input type="number" name="price" 
+                {% if prefill.price %} value="{{ prefill.price }}" {% endif %}  
+                class="form-control form-field {% if home_form.price.errors %}error-field{% endif %} {% if not audit.price_msg %}audit-ok{% endif %}" 
+                id="price" required>
+                
+            </div>
+            
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <label for="apartment_type" class="input-group-text">Apartment Type</label>
+                </div>
+                    <select data-selected-value="{{ prefill.apartment_type }}" name="apartment_type" id="apartment_type" class="custom-select form-field {% if home_form.apartment_type.errors %}error-field{% endif %} {% if not audit.apartment_type_msg %}audit-ok{% endif %}" required>
+                        <option value="" selected>Choose...</option>
+                        <option value="a room">a room</option>
+                        <option value="face me and face you">face me and face you</option>
+                        <option value="one bedroom self con">one bedroom self con</option>
+                        <option value="two bedroom self con">two bedroom self con</option>
+                        <option value="three bedroom self con">three bedroom self con</option>
+                        <option value="duplex">duplex</option>
+                        <option value="upstairs">upstairs</option>
+                        <option value="bungalow">bungalow</option>
+                    </select>
+                {% if not audit.apartment_type_msg %}
+                    <span>OK</span>
+                {% else %}
+                    <div>
+                        <p>{{ audit.apartment_type_msg }}</p>
+                    </div>
+                {% endif %}
+                {% if home_form.apartment_type.errors %}
+                    {% for error in home_form.apartment_type.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            
+            <div class="mb-2">
+                <label for="selling_point">Other selling points</label>
+                {% if not audit.selling_point_msg %}
+                    <span>OK</span>
+                {% else %}
+                    <div>
+                        <p>{{ audit.selling_point_msg }}</p>
+                    </div>
+                {% endif %}
+                {% if home_form.selling_points.errors %}
+                    {% for error in home_form.selling_points.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+                <textarea name="selling_point" id="selling_point" class="form-control form-field {% if home_form.selling_point.errors %}error-field{% endif %} {% if not audit.selling_point_msg %}audit-ok{% endif %}" rows="10" required>{% if prefill.selling_point %}{{prefill.selling_point}}{% endif %}</textarea>
+                
+            </div>
+        </div>
+    </form>
+    <div class="bg-light p-2 action-buttons">
+        <button id="cancelButton" class="btn btn-danger">cancel</button>
+        <button data-action="next" id="nextButton" class="btn btn-primary">next</button>
     </div>
-</main>
+</div>
+
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'pages/js/dashboard.js' %}"></script>
 {% endblock %}
