@@ -60,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -99,9 +100,9 @@ DATABASES = {
     }
 }
 
-if DEVELOPMENT_MODE is None:
+if not DEVELOPMENT_MODE:
     if len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-        if os.getenv("DATABASE_URL", None) is None:
+        if os.getenv("DATABASE_URL", None):
             raise Exception("DATABASE_URL environment variable not defined")
         DATABASES['default'] = dj_database_url.config()
 
@@ -138,12 +139,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -170,12 +165,12 @@ if admins:
 
 MANAGERS = ADMINS
 
-EMAIL_HOST = 'smtp.mail.yahoo.com'
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 # EMAIL_USE_TLS = True
-EMAIL_USE_SSL = True
+# EMAIL_USE_SSL = True
 # EMAIL_TIMEOUT = 5
 
 AUTHENTICATION_BACKENDS = {
@@ -200,15 +195,22 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ADAPTER = 'accounts.adapter.UserAccountAdapter'
 
-if DEVELOPMENT_MODE is None:
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+STATIC_URL = 'static/'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+if not DEVELOPMENT_MODE:
     # FOR AZURE
     DEFAULT_FILE_STORAGE = 'backend.custom_azure.AzureMediaStorage'
-    STATICFILES_STORAGE = 'backend.custom_azure.AzureStaticStorage'
+    # STATICFILES_STORAGE = 'backend.custom_azure.AzureStaticStorage'
 
-    STATIC_LOCATION = "static"
+    # STATIC_LOCATION = "static"
     MEDIA_LOCATION = "media"
 
     AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME')
     AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    # STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
     MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
