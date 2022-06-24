@@ -2,12 +2,28 @@
 
 {% block content %}
 <main>
-    <div class="container-fluid">
+    <div class="container-fluid" style="max-width:768px;">
         <h1>Frequently Asked Questions</h1>
         <div class="card mb-2 faq-card">
             <div class="card-header">
                 <h5>Lorem ipsum dolor sit amet?</h5>
-                <button class="btn btn-outline-primary toggle-btn">toggle</button>
+                <button class="btn btn-outline-primary toggle-btn">+</button>
+            </div>
+            <div class="card-body">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Facilis distinctio laudantium, modi nemo ad impedit officiis optio incidunt.
+                </p>
+            </div>
+        </div>
+        <div class="card mb-2 faq-card">
+            <div class="card-header">
+                <div class="">
+                    <h5>Lorem ipsum dolor sit amet?</h5>
+                </div>
+                <div class="">
+                    <button class="btn btn-outline-primary toggle-btn">+</button>
+                </div>
             </div>
             <div class="card-body">
                 <p>
@@ -19,7 +35,7 @@
         <div class="card mb-2 faq-card">
             <div class="card-header">
                 <h5>Lorem ipsum dolor sit amet?</h5>
-                <button class="btn btn-outline-primary toggle-btn">toggle</button>
+                <button class="btn btn-outline-primary toggle-btn">+</button>
             </div>
             <div class="card-body">
                 <p>
@@ -31,7 +47,7 @@
         <div class="card mb-2 faq-card">
             <div class="card-header">
                 <h5>Lorem ipsum dolor sit amet?</h5>
-                <button class="btn btn-outline-primary toggle-btn">toggle</button>
+                <button class="btn btn-outline-primary toggle-btn">+</button>
             </div>
             <div class="card-body">
                 <p>
@@ -42,8 +58,4 @@
         </div>
     </div>
 </main>
-{% endblock %}
-
-{% block extra_scripts %}
-
 {% endblock %}

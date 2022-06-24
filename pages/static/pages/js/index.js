@@ -37,6 +37,13 @@ $(() => {
     $('.toggle-btn').on('click', (ev) => {
         // Toggle faqs answers on btn click
         const btn = $(ev.target);
+        if (btn.hasClass('toggled')) {
+            btn.removeClass('toggled');
+            btn.text('+');
+        } else {
+            btn.addClass('toggled');
+            btn.text('-');
+        }
         const answer = btn.parents('div.faq-card').find('div.card-body');
         answer.toggle();
     });

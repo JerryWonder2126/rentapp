@@ -1,21 +1,28 @@
 body, html {
     background-color: rgba(243, 241, 241, 0.952);
+    font-family: 'Nunito', sans-serif;
 }
 h1, h5 {
     color: red;
+    font-weight: 600;
 }
 img {
     width: 100%;
 }
 .main-content {
-    min-height: calc(90vh - 72px);
+    min-height: calc(90vh - 64px);
 }
 footer {
     min-height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: #ff8d05; */
+    background-color: #ff8d05;
+}
+footer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
 }
 #about {
     min-height: 100vh;
@@ -262,6 +269,14 @@ footer {
     width: max-content;
     display: inline-flex;
 }
+
+/* FOR FAQ PAGE */
+.faq-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 
 /* FOR USER REVIEW HOME PAGE (FORM) */
 .audit-ok {

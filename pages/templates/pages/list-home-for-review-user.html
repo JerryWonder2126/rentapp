@@ -4,32 +4,36 @@
 
 {% block content %}
 <main>
-    <div class="container-fluid page-content">
+    <div class="container-fluid page-content" style="max-width: 768px;">
         <div class="row g-1 my-3">
-            <div class="">
+            <div class="col-8 col-sm-10">
                 <h1>Your Homes</h1>
-                <a href="{% url 'dashboard' %}?upload_home=True" class="btn btn-primary">Add a home</a>
+            </div>
+            <div class="col-4 col-sm-2 d-flex justify-content-end">
+                <a href="{% url 'dashboard' %}?upload_home=True" class="btn btn-primary">Add home</a>
             </div>
             {% if home_list %}
             {% for home in home_list %}
-            <div class="card user-home-box">
-                <div class="card-body">
-                    <div>
-                        <h5><a href="{% url 'single_product' 'home' home.home_id %}?preview=true" class="">{{home.short_description}}</a></h5>
-                        {% if home.reviewing %}
-                        <p><a href="{% url 'review_home_user' home.home_id %}">Click here to settle issues on your home</a></p>
-                        {% endif %}
-                        {% if home.review_updated %}
-                        <p>wait for admin to confirm/update this home</p>
-                        {% endif %}
-                        {% if home.on_site %}
-                        <p><a href="{% url 'confirm_home_on_site' home.home_id %}">Click here to start/resume on-site review process</a></p>
-                        {% endif %}
-                        {% if home.passed_review %}
-                        <p><a href="{% url 'confirm_home_on_sale' home.home_id %}">Click here to put home on sale</a></p>
-                        {% endif %}
+            <div class="col-12">
+                <div class="card user-home-box">
+                    <div class="card-body">
+                        <div>
+                            <h5><a href="{% url 'single_product' 'home' home.home_id %}?preview=true" class="">{{home.short_description}}</a></h5>
+                            {% if home.reviewing %}
+                            <p><a href="{% url 'review_home_user' home.home_id %}">Click here to settle issues on your home</a></p>
+                            {% endif %}
+                            {% if home.review_updated %}
+                            <p>wait for admin to confirm/update this home</p>
+                            {% endif %}
+                            {% if home.on_site %}
+                            <p><a href="{% url 'confirm_home_on_site' home.home_id %}">Click here to start/resume on-site review process</a></p>
+                            {% endif %}
+                            {% if home.passed_review %}
+                            <p><a href="{% url 'confirm_home_on_sale' home.home_id %}">Click here to put home on sale</a></p>
+                            {% endif %}
+                        </div>
+                        <div data-tags="{{ home.tags }}" class="home-tags"></div>
                     </div>
-                    <div data-tags="{{ home.tags }}" class="home-tags"></div>
                 </div>
             </div>
             {% endfor %}
