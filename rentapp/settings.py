@@ -102,7 +102,7 @@ DATABASES = {
 
 if not DEVELOPMENT_MODE:
     if len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-        if os.getenv("DATABASE_URL", None):
+        if not os.getenv("DATABASE_URL", None):
             raise Exception("DATABASE_URL environment variable not defined")
         DATABASES['default'] = dj_database_url.config()
 
